@@ -1,44 +1,82 @@
-Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)
+# 🌍 WebQuest: Huella de Carbono, Población y Crecimiento (ES/EN)
 
-Este trabajo —incluyendo la estructura HTML, el diseño, la adaptación bilingüe 
-(ES/EN), la organización pedagógica, el contenido narrativo, el CSS, la lógica 
-JavaScript y la implementación completa de la WebQuest— está bajo una licencia 
-Creative Commons Atribución-CompartirIgual 4.0 Internacional.
+**WebQuest bilingüe (Español/Inglés)** diseñada para alumnado de **ESO/Bachillerato**, centrada en la relación entre **crecimiento poblacional**, **emisiones de CO₂** y **sostenibilidad global**.  
+Incluye narrativa inmersiva, actividades guiadas, recursos interactivos, evaluación y un **quiz autocorregible**.  
+Completamente implementada en **HTML + CSS + JavaScript**, con diseño responsive y **selector de idioma ES/EN**.
 
-Usted es libre de:
-- Compartir: copiar y redistribuir el material en cualquier medio o formato.
-- Adaptar: remezclar, transformar y crear a partir del material para cualquier 
-  propósito, incluso comercial.
+---
 
-Bajo los siguientes términos:
+## 🚀 **Demo en GitHub Pages**
+🔗 **https://franmondejar.github.io/WebQuest/**
 
-1. Atribución (BY):
-   Debe otorgar el crédito adecuado a **Francisco Mondéjar**, proporcionar un 
-   enlace a la licencia e indicar si se han realizado cambios. Puede hacerlo de 
-   cualquier manera razonable, pero no de forma que sugiera que el licenciante 
-   lo respalda o aprueba su uso.
+Versión completamente funcional, accesible y lista para usar en cualquier plataforma educativa.
 
-2. CompartirIgual (SA):
-   Si remezcla, transforma o crea a partir de este material, debe distribuir su 
-   contribución bajo la **misma licencia** que el original (CC BY-SA 4.0).
+---
 
-––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+## 🎯 **Descripción del Proyecto**
+Esta WebQuest propone una misión narrativa ambientada en el año 2084: el alumnado pertenece a la *Generación Renacer*, un grupo de jóvenes investigadores que deben reconstruir la historia del colapso ambiental.  
 
-Aviso adicional de atribución (obra derivada):
+A través de pestañas temáticas, los estudiantes trabajan:
 
-Parte de la base conceptual de esta WebQuest se desarrolló utilizando un 
-prompt/aplicación externa creada por un tercero (autor no especificado), que 
-sirvió como andamiaje metodológico inicial. El material ha sido modificado, 
-ampliado y reescrito de forma sustancial para adaptarlo al contexto educativo 
-de ESO/Bachillerato, incorporando narrativa original, diseño visual propio, 
-estructura bilingüe, mejoras de accesibilidad y código completamente 
-personalizado.
+- Concepto de **huella de carbono**
+- Impacto del **crecimiento poblacional**
+- Análisis de **datos reales**
+- Reflexión crítica sobre el futuro
+- Producción final de un informe multimedia
 
-––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+El recurso está diseñado para su uso en:
 
-Texto legal completo:
-https://creativecommons.org/licenses/by-sa/4.0/legalcode.es
+- Moodle  
+- Aula Virtual  
+- GitHub Pages  
+- Google Classroom  
+- Cualquier LMS compatible con contenido HTML
 
-Autor: Francisco Mondéjar  
-Año: 2025  
-Repositorio: https://github.com/franmondejar/WebQuest
+---
+
+## 🧩 **Características principales**
+- 🌐 **Bilingüe**: selector de idioma español/inglés integrado  
+- 🧭 **Navegación por pestañas**  
+- 🎬 **Narrativa tipo cine**  
+- 📚 **Recursos y enlaces reales**  
+- 🧠 **Quiz autocorregible**  
+- ♿ **Etiquetas ARIA e inclusión accesible**  
+- 📱 **Responsive** (móvil/tablet/escritorio)  
+- 🎨 **Diseño limpio, moderno y pedagógico**  
+- 🔧 **Código completamente editable**
+
+---
+
+## 🛠️ **Tecnologías utilizadas**
+- **HTML5**  
+- **CSS3 (responsive y variables CSS)**  
+- **JavaScript vanilla**  
+- **GitHub Pages**
+
+Sin frameworks externos.  
+100% ligero y compatible con navegadores modernos.
+
+---
+
+## 🏫 **Cómo usar este recurso en Moodle**
+
+### ✔️ Opción 1: Enlazar como URL (recomendado)
+1. En Moodle → *Añadir actividad o recurso*  
+2. Seleccionar **URL**  
+3. Pegar este enlace:  
+   `https://franmondejar.github.io/WebQuest/`  
+4. Mostrar en ventana nueva o emergente
+
+### ✔️ Opción 2: Incrustar dentro de una Página/Libro (iframe)
+Pegar este código en el editor HTML (`<>`):
+
+```html
+<div style="aspect-ratio:16/9; max-width: 1100px; margin: 0 auto;">
+  <iframe 
+    src="https://franmondejar.github.io/WebQuest/" 
+    style="width:100%; height:100%; border:1px solid #ccc; border-radius:12px;" 
+    title="WebQuest · Huella de carbono (ES/EN)" 
+    loading="lazy" 
+    allowfullscreen>
+  </iframe>
+</div>
