@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebQuest · El eco de las huellas (ESO/Bachillerato)</title>
+  <meta name="description" content="WebQuest completa: Huella de carbono, población y crecimiento — 4-5 sesiones." />
+  <style>
+    :root{
+      --azul:#0a60ff;        /* color institucional */
+      --azul-osc:#0639a9;
+      --azul-suave:#e9f0ff;
+      --blanco:#ffffff;
+      --tinta:#1f2a33;
+      --muted:#5b6670;
+      --borde:#e6e9ef;
+      --ok:#2e7d32;
+      --warn:#ef6c00;
+      --err:#c62828;
+      --radius:18px;
+      --shadow:0 14px 32px rgba(10,96,255,.12);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--tinta);background:linear-gradient(180deg,#ffffff, #f6f9ff);}    
+    .wrap{max-width:1100px;margin-inline:auto;padding:clamp(16px,2.5vw,28px);}    
+
+    /* Idiomas */
+    [data-lang="es"] .lang-en{display:none!important;}
+    [data-lang="en"] .lang-es{display:none!important;}
+
+    /* Header */
+    header{background:linear-gradient(135deg,var(--azul),var(--azul-osc));color:var(--blanco);border-bottom:4px solid var(--azul-osc);} 
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:42px 0;}
+    .hero h1{margin:0 0 10px 0;font-weight:800;letter-spacing:.2px;line-height:1.15;font-size:clamp(26px,3.1vw,42px);} 
+    .hero p{margin:8px 0 0 0;opacity:.95;line-height:1.5;font-size:clamp(14px,1.4vw,18px);} 
+    .chip{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .7rem;border-radius:999px;background:rgba(255,255,255,.18);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.28);font-weight:600;font-size:.9rem}
+
+    /* Selector idioma */
+    .lang-toggle{display:flex;gap:6px;justify-content:flex-end;margin-bottom:10px;}
+    .lang-btn{appearance:none;border-radius:999px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.15);color:#fff;padding:4px 10px;font-size:.8rem;font-weight:600;cursor:pointer;letter-spacing:.03em;}
+    .lang-btn.active{background:#ffffff;color:var(--azul-osc);border-color:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.05);}
+
+    /* Tabs */
+    .tabs{margin-top:-28px;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .tab-nav{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--borde);background:var(--azul-suave);} 
+    .tab-btn{appearance:none;border:0;background:transparent;padding:14px 18px;font-weight:700;color:var(--azul-osc);cursor:pointer;position:relative;display:flex;align-items:center;gap:10px}
+    .tab-btn[aria-selected="true"]{background:var(--blanco);color:var(--azul);}
+    .tab-btn[aria-selected="true"]::after{content:"";position:absolute;inset:auto 0 -1px 0;height:3px;background:var(--azul);} 
+    .tab-icon{width:20px;height:20px}
+    .tab-panel{display:none;padding:22px 22px 26px 22px}
+    .tab-panel[aria-hidden="false"]{display:block;}
+
+    /* Cards & blocks */
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr);} 
+    .card{grid-column:span 12;background:var(--blanco);border:1px solid var(--borde);border-radius:14px;padding:16px 16px 18px 16px;box-shadow:0 6px 20px rgba(10,96,255,.06);} 
+    .card h3{margin:.2rem 0 .6rem 0;font-size:1.1rem}
+    .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+    .kpi .pill{background:var(--azul-suave);border:1px solid var(--borde);border-radius:999px;padding:10px 12px;font-weight:600;color:var(--azul-osc);text-align:center}
+
+    .intro-cine{background:linear-gradient(180deg,#0b1b3a,#0f316a);color:#e6eeff;border:0}
+    .intro-cine p{color:#eaf1ff;opacity:.95}
+    .intro-cine .lead{font-size:1.05rem;line-height:1.65}
+
+    /* Table rubric */
+    table{width:100%;border-collapse:collapse}
+    th,td{border:1px solid var(--borde);padding:10px 12px;text-align:left;vertical-align:top}
+    thead th{background:var(--azul-suave)}
+
+    /* Process list */
+    ol.process{counter-reset:step;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+    ol.process li{background:#fbfdff;border:1px dashed var(--borde);border-radius:12px;padding:12px 14px;position:relative}
+    ol.process li::before{counter-increment:step;content:counter(step);position:absolute;left:-10px;top:-10px;background:var(--azul);color:var(--blanco);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;box-shadow:0 6px 16px rgba(10,96,255,.35)}
+
+    /* Quiz */
+    .quiz-block{display:grid;gap:14px}
+    .quiz-q{border:1px solid var(--borde);border-radius:12px;padding:12px;background:#fff}
+    .quiz-q h4{margin:.2rem 0 .4rem 0}
+    .options{display:grid;gap:8px;margin-top:8px}
+    .options label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--borde);padding:10px;border-radius:10px;cursor:pointer;background:#fcfdff}
+    .quiz-actions{display:flex;gap:10px;margin-top:8px}
+    .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+    .btn.primary{background:var(--azul);color:#fff}
+    .btn.ghost{background:#eef4ff;color:var(--azul-osc);border:1px solid var(--borde)}
+    .score{font-weight:800}
+    .feedback{margin-top:8px;font-size:.95rem}
+
+    /* Iframe container */
+    .iframe-wrap{aspect-ratio:16/9;border:1px solid var(--borde);border-radius:12px;overflow:hidden;background:#000}
+    .iframe-wrap iframe{width:100%;height:100%;border:0}
+
+    /* Footer */
+    footer{margin:28px 0 8px 0;color:var(--muted);font-size:.9rem}
+
+    /* Responsive */
+    @media (max-width:860px){
+      .hero{grid-template-columns:1fr}
+      .lang-toggle{justify-content:flex-start;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero" role="banner">
+      <div>
+        <div class="lang-toggle" role="group" aria-label="Selector de idioma / Language selector">
+          <button type="button" class="lang-btn active" data-lang="es" aria-pressed="true">ES</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <span class="chip" aria-label="Nivel educativo y duración">
+          <span class="lang-es">ESO/Bachillerato · 4-5 sesiones</span>
+          <span class="lang-en">Secondary/Baccalaureate · 4–5 sessions</span>
+        </span>
+        <h1>
+          <span class="lang-es">El eco de las huellas · WebQuest</span>
+          <span class="lang-en">Echo of the Footprints · WebQuest</span>
+        </h1>
+        <p class="lead">
+          <span class="lang-es">Huella de carbono, población y crecimiento — una misión de la <strong>Generación Renacer</strong> para reconstruir el conocimiento y rediseñar el futuro.</span>
+          <span class="lang-en">Carbon footprint, population and growth — a mission of the <strong>Reborn Generation</strong> to rebuild knowledge and redesign the future.</span>
+        </p>
+        <div class="kpi" aria-hidden="true">
+          <div class="pill">
+            <span class="lang-es">Tema: Sostenibilidad</span>
+            <span class="lang-en">Topic: Sustainability</span>
+          </div>
+        </div>
+      </div>
+      <svg class="hero-art" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#cfe0ff"/>
+            <stop offset="1" stop-color="#93b7ff"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="300" height="200" fill="url(#g)" rx="16"/>
+        <g fill="#0a60ff" opacity="0.15">
+          <circle cx="60" cy="60" r="42"/>
+          <circle cx="170" cy="40" r="26"/>
+          <circle cx="230" cy="110" r="40"/>
+        </g>
+        <g fill="#0639a9" opacity="0.2">
+          <rect x="40" y="120" width="220" height="16" rx="8"/>
+          <rect x="60" y="145" width="180" height="12" rx="6"/>
+        </g>
+        <g fill="#0a60ff" opacity="0.45">
+          <path d="M35 155 C 80 120, 120 180, 170 150 S 250 160, 270 140" stroke="#0a60ff" stroke-width="3" fill="none"/>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <main class="wrap" role="main">
+    <section class="tabs" aria-label="Navegación principal por pestañas">
+      <nav class="tab-nav" role="tablist" aria-label="Secciones de la WebQuest">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-intro" id="tabbtn-intro">
+          📋 <span class="lang-es">Introducción</span><span class="lang-en">Introduction</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-objetivos" id="tabbtn-objetivos">
+          🎯 <span class="lang-es">Objetivos</span><span class="lang-en">Objectives</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-tarea" id="tabbtn-tarea">
+          📝 <span class="lang-es">Tarea</span><span class="lang-en">Task</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-proceso" id="tabbtn-proceso">
+          🔍 <span class="lang-es">Proceso</span><span class="lang-en">Process</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-recursos" id="tabbtn-recursos">
+          📚 <span class="lang-es">Recursos</span><span class="lang-en">Resources</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-eval" id="tabbtn-eval">
+          📊 <span class="lang-es">Evaluación</span><span class="lang-en">Assessment</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-conclusion" id="tabbtn-conclusion">
+          🎓 <span class="lang-es">Conclusión</span><span class="lang-en">Conclusion</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-quiz" id="tabbtn-quiz">
+          🎮 <span class="lang-es">Quiz</span><span class="lang-en">Quiz</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-juego" id="tabbtn-juego">
+          🕹️ <span class="lang-es">Iframe juego</span><span class="lang-en">Embedded game</span>
+        </button>
+      </nav>
+
+      <!-- INTRO -->
+      <article class="tab-panel intro-cine" role="tabpanel" id="tab-intro" aria-hidden="false" aria-labelledby="tabbtn-intro">
+        <div class="card" style="background:transparent;border-color:rgba(255,255,255,.16);box-shadow:none">
+          <h2>
+            <span class="lang-es">Introducción · “El despertar de la Tierra”</span>
+            <span class="lang-en">Introduction · “The Earth’s Awakening”</span>
+          </h2>
+          <p class="lead">
+            <span class="lang-es"><em>Año 2084.</em> La Tierra respira con dificultad. Las ciudades, ahora cubiertas de polvo y silencio, fueron una vez centros vibrantes de consumo y movimiento.</span>
+            <span class="lang-en"><em>Year 2084.</em> The Earth is struggling to breathe. Cities, now covered in dust and silence, were once vibrant centres of movement and consumption.</span>
+          </p>
+          <p>
+            <span class="lang-es">Los archivos del viejo mundo cuentan que todo comenzó mucho antes: cuando la población humana crecía sin detenerse, cuando cada nueva fábrica, cada nuevo coche y cada nuevo hogar sumaban una huella más en el suelo del planeta. Nadie escuchó las señales. Nadie detuvo el pulso del consumo.</span>
+            <span class="lang-en">The archives of the old world say it all began long before: when the human population grew without pause, when every new factory, every new car and every new home added one more footprint on the planet’s surface. No one listened to the signs. No one slowed the pulse of consumption.</span>
+          </p>
+          <p>
+            <span class="lang-es">Tú formas parte de la <strong>Generación Renacer</strong>, un grupo de jóvenes investigadores enviados a reconstruir la historia del colapso ambiental. Tu misión: <strong>rastrear el vínculo entre el crecimiento de la población y la expansión de la huella de carbono</strong> que llevó al planeta al borde del colapso.</span>
+            <span class="lang-en">You are part of the <strong>Reborn Generation</strong>, a group of young researchers sent to rebuild the story of the environmental collapse. Your mission: <strong>trace the link between population growth and the expansion of the carbon footprint</strong> that pushed the planet to the edge.</span>
+          </p>
+          <p>
+            <span class="lang-es">Entre datos perdidos y registros del pasado, buscarás respuestas… y esperanza.</span>
+            <span class="lang-en">Between lost data and scattered records from the past, you will search for answers… and for hope.</span>
+          </p>
+          <p>
+            <span class="lang-es"><strong>¿Podremos aprender del pasado antes de que la última huella se borre en el polvo?</strong></span>
+            <span class="lang-en"><strong>Can we learn from the past before the last footprint disappears in the dust?</strong></span>
+          </p>
+        </div>
+      </article>
+
+      <!-- OBJETIVOS -->
+      <article class="tab-panel" role="tabpanel" id="tab-objetivos" aria-hidden="true" aria-labelledby="tabbtn-objetivos">
+        <h2>
+          <span class="lang-es">Objetivos de aprendizaje · “Reconstruir para comprender”</span>
+          <span class="lang-en">Learning objectives · “Rebuild to understand”</span>
+        </h2>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li>
+                <span class="lang-es">Comprender el concepto de <strong>huella de carbono</strong> y su relación con las actividades humanas.</span>
+                <span class="lang-en">Understand the concept of <strong>carbon footprint</strong> and its relationship with human activities.</span>
+              </li>
+              <li>
+                <span class="lang-es">Analizar cómo el <strong>crecimiento poblacional</strong> afectó al equilibrio ecológico global.</span>
+                <span class="lang-en">Analyse how <strong>population growth</strong> affected the global ecological balance.</span>
+              </li>
+              <li>
+                <span class="lang-es">Interpretar <strong>datos y tendencias históricas</strong> sobre población y emisiones.</span>
+                <span class="lang-en">Interpret <strong>historical data and trends</strong> on population and emissions.</span>
+              </li>
+              <li>
+                <span class="lang-es">Evaluar <strong>soluciones sostenibles</strong> que podrían haber evitado el colapso ambiental.</span>
+                <span class="lang-en">Evaluate <strong>sustainable solutions</strong> that could have helped avoid the environmental collapse.</span>
+              </li>
+              <li>
+                <span class="lang-es">Desarrollar <strong>pensamiento crítico</strong> y <strong>trabajo cooperativo</strong> en un contexto de misión científica.</span>
+                <span class="lang-en">Develop <strong>critical thinking</strong> and <strong>cooperative work</strong> in a scientific mission context.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- TAREA -->
+      <article class="tab-panel" role="tabpanel" id="tab-tarea" aria-hidden="true" aria-labelledby="tabbtn-tarea">
+        <h2>
+          <span class="lang-es">Tarea · “El informe del renacimiento”</span>
+          <span class="lang-en">Task · “The Rebirth Report”</span>
+        </h2>
+        <div class="grid">
+          <div class="card">
+            <p>
+              <span class="lang-es">Cada grupo de investigadores deberá reconstruir un <strong>Informe de Reconexión</strong>: un archivo multimedia que recopile la verdad sobre el pasado.</span>
+              <span class="lang-en">Each research team will rebuild a <strong>Reconnection Report</strong>: a multimedia file that collects the truth about the past.</span>
+            </p>
+            <p>
+              <span class="lang-es">La pregunta clave: <strong>¿Cómo cambió la huella de carbono del planeta a medida que crecía la población?</strong></span>
+              <span class="lang-en">The key question is: <strong>How did the planet’s carbon footprint change as the population grew?</strong></span>
+            </p>
+            <ul>
+              <li>
+                <span class="lang-es">Una <strong>línea temporal</strong> con hitos de crecimiento demográfico y consecuencias ambientales.</span>
+                <span class="lang-en">A <strong>timeline</strong> with milestones in demographic growth and their environmental consequences.</span>
+              </li>
+              <li>
+                <span class="lang-es"><strong>Gráficos y mapas</strong> comparativos de emisiones entre regiones o países.</span>
+                <span class="lang-en"><strong>Graphs and maps</strong> comparing emissions between regions or countries.</span>
+              </li>
+              <li>
+                <span class="lang-es"><strong>Causas y consecuencias</strong>: relación entre consumo, energía y población.</span>
+                <span class="lang-en"><strong>Causes and consequences</strong>: the relationship between consumption, energy and population.</span>
+              </li>
+              <li>
+                <span class="lang-es"><strong>Propuesta de restauración</strong>: medidas para evitar repetir el error.</span>
+                <span class="lang-en"><strong>Restoration proposal</strong>: measures to avoid repeating the same mistakes.</span>
+              </li>
+              <li>
+                <span class="lang-es">Formato libre: <em>infografía, dossier digital, vídeo narrado, Genially o presentación interactiva</em>.</span>
+                <span class="lang-en">Free format: <em>infographic, digital dossier, narrated video, Genially or interactive presentation</em>.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- PROCESO -->
+      <article class="tab-panel" role="tabpanel" id="tab-proceso" aria-hidden="true" aria-labelledby="tabbtn-proceso">
+        <h2>
+          <span class="lang-es">Proceso · “La misión paso a paso”</span>
+          <span class="lang-en">Process · “The mission step by step”</span>
+        </h2>
+        <div class="grid">
+          <div class="card">
+            <h3>
+              <span class="lang-es">Asignación de roles</span>
+              <span class="lang-en">Role assignment</span>
+            </h3>
+            <ul>
+              <li>
+                <span class="lang-es"><strong>Analista demográfico</strong>: rastrea la evolución de la población.</span>
+                <span class="lang-en"><strong>Demographic analyst</strong>: tracks population evolution.</span>
+              </li>
+              <li>
+                <span class="lang-es"><strong>Ingeniero ambiental</strong>: estudia los datos de emisiones y recursos.</span>
+                <span class="lang-en"><strong>Environmental engineer</strong>: studies data on emissions and resources.</span>
+              </li>
+              <li>
+                <span class="lang-es"><strong>Historiador del colapso</strong>: contextualiza los hechos y redacta conclusiones.</span>
+                <span class="lang-en"><strong>Collapse historian</strong>: contextualises events and writes conclusions.</span>
+              </li>
+              <li>
+                <span class="lang-es"><strong>Archivista digital</strong>: diseña y presenta el informe final.</span>
+                <span class="lang-en"><strong>Digital archivist</strong>: designs and presents the final report.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>
+              <span class="lang-es">Recopilación de datos perdidos</span>
+              <span class="lang-en">Collecting lost data</span>
+            </h3>
+            <p>
+              <span class="lang-es">Utiliza los recursos indicados para recuperar información fiable. Guarda los datos en tu “terminal de misión” (cuaderno o documento compartido).</span>
+              <span class="lang-en">Use the listed resources to retrieve reliable information. Store the data in your “mission terminal” (notebook or shared document).</span>
+            </p>
+          </div>
+          <div class="card">
+            <h3>
+              <span class="lang-es">Análisis del vínculo</span>
+              <span class="lang-en">Analysing the link</span>
+            </h3>
+            <p>
+              <span class="lang-es">Compara la evolución del crecimiento poblacional con las emisiones de CO₂. Busca patrones: ¿cuándo empezó la curva a desviarse? ¿Qué países marcaron la diferencia?</span>
+              <span class="lang-en">Compare the evolution of population growth with CO₂ emissions. Look for patterns: when did the curve start to deviate? Which countries made the biggest difference?</span>
+            </p>
+          </div>
+          <div class="card">
+            <h3>
+              <span class="lang-es">Reconstrucción del informe</span>
+              <span class="lang-en">Rebuilding the report</span>
+            </h3>
+            <p>
+              <span class="lang-es">Diseña el documento final con creatividad, claridad y rigor científico. Incluye fuentes, gráficas, testimonios y una visión de futuro sostenible.</span>
+              <span class="lang-en">Design the final document with creativity, clarity and scientific rigour. Include sources, graphs, testimonies and a vision of a sustainable future.</span>
+            </p>
+          </div>
+          <div class="card">
+            <h3>
+              <span class="lang-es">Presentación ante el Consejo del Renacer</span>
+              <span class="lang-en">Presentation to the Rebirth Council</span>
+            </h3>
+            <p>
+              <span class="lang-es">Cada grupo expondrá sus hallazgos y defenderá su propuesta de restauración.</span>
+              <span class="lang-en">Each group will present its findings and defend its restoration proposal.</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- RECURSOS -->
+      <article class="tab-panel" role="tabpanel" id="tab-recursos" aria-hidden="true" aria-labelledby="tabbtn-recursos">
+        <h2>
+          <span class="lang-es">Recursos · “Los archivos del viejo mundo”</span>
+          <span class="lang-en">Resources · “The archives of the old world”</span>
+        </h2>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li>
+                <a href="https://www.worldometers.info/" target="_blank" rel="noopener">
+                  <span class="lang-es">Worldometer – Población mundial</span>
+                  <span class="lang-en">Worldometer – World population</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://ourworldindata.org/co2-emissions" target="_blank" rel="noopener">
+                  <span class="lang-es">Our World in Data – Emisiones de CO₂</span>
+                  <span class="lang-en">Our World in Data – CO₂ emissions</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.ine.es/en/" target="_blank" rel="noopener">
+                  <span class="lang-es">INE – Datos demográficos España</span>
+                  <span class="lang-en">INE – Demographic data for Spain</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://climate.mit.edu/learn/calculators" target="_blank" rel="noopener">
+                  <span class="lang-es">Calculadora de Huella de Carbono – MIT</span>
+                  <span class="lang-en">Carbon Footprint Calculator – MIT</span>
+                </a>
+              </li>
+              <li>
+                <span class="lang-es">“Los informes perdidos del siglo XXI”: dossier entregado por el docente.</span>
+                <span class="lang-en">“The lost reports of the 21st century”: dossier provided by the teacher.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- EVALUACIÓN -->
+      <article class="tab-panel" role="tabpanel" id="tab-eval" aria-hidden="true" aria-labelledby="tabbtn-eval">
+        <h2>
+          <span class="lang-es">Evaluación · “El juicio del Consejo”</span>
+          <span class="lang-en">Assessment · “The Council’s judgement”</span>
+        </h2>
+        <div class="grid">
+          <div class="card">
+            <div class="table-wrap">
+              <table aria-label="Rúbrica de evaluación">
+                <thead>
+                  <tr>
+                    <th>
+                      <span class="lang-es">Dimensión</span>
+                      <span class="lang-en">Dimension</span>
+                    </th>
+                    <th>
+                      <span class="lang-es">Nivel excelente (10)</span>
+                      <span class="lang-en">Excellent level (10)</span>
+                    </th>
+                    <th>
+                      <span class="lang-es">Nivel medio (7)</span>
+                      <span class="lang-en">Medium level (7)</span>
+                    </th>
+                    <th>
+                      <span class="lang-es">Nivel básico (5)</span>
+                      <span class="lang-en">Basic level (5)</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong><span class="lang-es">Rigor científico</span><span class="lang-en">Scientific rigour</span></strong></td>
+                    <td>
+                      <span class="lang-es">Analiza con precisión y relaciona causas y efectos</span>
+                      <span class="lang-en">Analyses accurately and clearly relates causes and effects</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Explica correctamente, con algunas imprecisiones</span>
+                      <span class="lang-en">Explains correctly, with some inaccuracies</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Ofrece una visión superficial</span>
+                      <span class="lang-en">Offers only a superficial view</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong><span class="lang-es">Tratamiento de datos</span><span class="lang-en">Use of data</span></strong></td>
+                    <td>
+                      <span class="lang-es">Usa datos actuales y los representa con claridad</span>
+                      <span class="lang-en">Uses up-to-date data and represents them clearly</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Incluye algunos errores o carencias gráficas</span>
+                      <span class="lang-en">Includes some errors or lacks clarity in graphs</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Datos confusos o no contrastados</span>
+                      <span class="lang-en">Data are confusing or not checked</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong><span class="lang-es">Creatividad y comunicación</span><span class="lang-en">Creativity and communication</span></strong></td>
+                    <td>
+                      <span class="lang-es">Presentación visual, coherente y original</span>
+                      <span class="lang-en">Visual, coherent and original presentation</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Correcta pero poco atractiva</span>
+                      <span class="lang-en">Correct but not very engaging</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Desordenada o repetitiva</span>
+                      <span class="lang-en">Disorganised or repetitive</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong><span class="lang-es">Trabajo cooperativo</span><span class="lang-en">Cooperative work</span></strong></td>
+                    <td>
+                      <span class="lang-es">Roles bien definidos y equilibrados</span>
+                      <span class="lang-en">Roles are well defined and balanced</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Participación irregular</span>
+                      <span class="lang-en">Participation is uneven</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Escasa colaboración</span>
+                      <span class="lang-en">Little collaboration</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong><span class="lang-es">Propuesta de restauración</span><span class="lang-en">Restoration proposal</span></strong></td>
+                    <td>
+                      <span class="lang-es">Innovadora, viable y bien argumentada</span>
+                      <span class="lang-en">Innovative, viable and well argued</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Aceptable pero poco desarrollada</span>
+                      <span class="lang-en">Acceptable but not very developed</span>
+                    </td>
+                    <td>
+                      <span class="lang-es">Genérica o sin base lógica</span>
+                      <span class="lang-en">Generic or without a clear logical basis</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CONCLUSIÓN -->
+      <article class="tab-panel" role="tabpanel" id="tab-conclusion" aria-hidden="true" aria-labelledby="tabbtn-conclusion">
+        <h2>
+          <span class="lang-es">Conclusión · “La última huella”</span>
+          <span class="lang-en">Conclusion · “The last footprint”</span>
+        </h2>
+        <div class="grid">
+          <div class="card">
+            <p>
+              <span class="lang-es">Entre las ruinas del pasado, descubristeis algo más que cifras: una lección. La huella de carbono no es solo una medida ambiental, sino el reflejo de nuestras decisiones colectivas.</span>
+              <span class="lang-en">Among the ruins of the past, you discovered more than numbers: you found a lesson. The carbon footprint is not just an environmental measure, but a reflection of our collective decisions.</span>
+            </p>
+            <p>
+              <span class="lang-es">Cada acto, cada consumo, cada nuevo ser humano que llega al mundo añade una línea más al mapa del planeta. Pero también cada idea, cada proyecto y cada gesto consciente puede borrar parte de esa huella.</span>
+              <span class="lang-en">Every act, every purchase, every new human being who arrives in the world adds one more line to the planet’s map. But every idea, every project and every conscious gesture can erase part of that footprint too.</span>
+            </p>
+            <p>
+              <span class="lang-es"><strong>El futuro no está escrito en las cenizas, sino en las acciones del presente.</strong></span>
+              <span class="lang-en"><strong>The future is not written in the ashes, but in the actions of the present.</strong></span>
+            </p>
+            <p>
+              <span class="lang-es">La pregunta ya no es “¿qué hicimos?”, sino “¿qué haremos ahora?”.</span>
+              <span class="lang-en">The question is no longer “what did we do?”, but “what will we do now?”.</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- QUIZ -->
+      <article class="tab-panel" role="tabpanel" id="tab-quiz" aria-hidden="true" aria-labelledby="tabbtn-quiz">
+        <h2>
+          <span class="lang-es">Quiz interactivo</span>
+          <span class="lang-en">Interactive quiz</span>
+        </h2> 
+        <div class="quiz-block" id="quiz">
+          <!-- Q1 Reflexión (autocorrección por palabras clave) -->
+          <div class="quiz-q" data-type="open" data-id="q1">
+            <h4>
+              <span class="lang-es">1) Reflexión breve (3–4 líneas)</span>
+              <span class="lang-en">1) Short reflection (3–4 lines)</span>
+            </h4>
+            <p>
+              <span class="lang-es"><em>Explica en qué situaciones puede <strong>crecer la población</strong> de un país sin que aumenten sus <strong>emisiones totales</strong>. Propón al menos dos palancas explicativas.</em></span>
+              <span class="lang-en"><em>Explain in which situations a country’s <strong>population can grow</strong> without increasing its <strong>total emissions</strong>. Propose at least two explanatory levers.</em></span>
+            </p>
+            <textarea rows="5" style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--borde)" placeholder="Escribe tu respuesta aquí / Write your answer here…"></textarea>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+
+          <!-- Q2 Caso (opción múltiple) -->
+          <div class="quiz-q" data-type="mc" data-id="q2" data-correct="b">
+            <h4>
+              <span class="lang-es">2) Caso: Dos países, misma población, distinta huella</span>
+              <span class="lang-en">2) Case: Two countries, same population, different footprint</span>
+            </h4>
+            <p>
+              <span class="lang-es">País A y País B tienen poblaciones iguales. En A, las emisiones per cápita son la mitad que en B, pero el consumo total de energía de A es mayor que el de B. ¿Qué conclusión <strong>más consistente</strong> podemos extraer?</span>
+              <span class="lang-en">Country A and Country B have the same population. In A, per capita emissions are half those of B, but A’s total energy consumption is higher than B’s. Which is the <strong>most consistent</strong> conclusion?</span>
+            </p>
+            <div class="options">
+              <label>
+                <input type="radio" name="q2" value="a">
+                <span class="lang-es">A tiene más población que B.</span>
+                <span class="lang-en">A has a larger population than B.</span>
+              </label>
+              <label>
+                <input type="radio" name="q2" value="b">
+                <span class="lang-es">A ha descarbonizado parte de su matriz energética y/o es más eficiente por unidad de energía.</span>
+                <span class="lang-en">A has decarbonised part of its energy mix and/or is more efficient per unit of energy.</span>
+              </label>
+              <label>
+                <input type="radio" name="q2" value="c">
+                <span class="lang-es">B emite menos porque su economía es más grande.</span>
+                <span class="lang-en">B emits less because its economy is larger.</span>
+              </label>
+              <label>
+                <input type="radio" name="q2" value="d">
+                <span class="lang-es">No puede concluirse nada con esos datos.</span>
+                <span class="lang-en">Nothing can be concluded from these data.</span>
+              </label>
+            </div>
+            <div class="feedback" aria-live="polite"></div>
+          </div>
+
+          <div class="quiz-actions">
+            <button class="btn primary" id="btn-correccion">
+              <span class="lang-es">Corregir</span>
+              <span class="lang-en">Mark</span>
+            </button>
+            <button class="btn ghost" id="btn-reset">
+              <span class="lang-es">Reiniciar</span>
+              <span class="lang-en">Reset</span>
+            </button>
+            <span class="score" id="score" aria-live="polite"></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- IFRAME JUEGO -->
+      <article class="tab-panel" role="tabpanel" id="tab-juego" aria-hidden="true" aria-labelledby="tabbtn-juego">
+        <h2>
+          <span class="lang-es">Juego educativo incrustado</span>
+          <span class="lang-en">Embedded educational game</span>
+        </h2>
+        <p>
+          <span class="lang-es">Inserta aquí el enlace de tu juego (Genially / H5P / Kahoot / Wordwall / u otros). Reemplaza el <code>src</code> del iframe.</span>
+          <span class="lang-en">Insert your game link here (Genially / H5P / Kahoot / Wordwall / others). Replace the iframe <code>src</code> attribute.</span>
+        </p>
+        <div class="iframe-wrap">
+          <iframe title="Juego educativo / Educational game" src="about:blank" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </article>
+
+    </section>
+
+    <footer>
+      <span class="lang-es">WebQuest creada para ESO/Bachillerato.</span>
+      <span class="lang-en">WebQuest created for Secondary/Baccalaureate students.</span>
+    </footer>
+  </main>
+
+  <script>
+    // --- Selector de idioma ---
+    const langButtons = Array.from(document.querySelectorAll('.lang-btn'));
+
+    function setLang(lang){
+      document.documentElement.setAttribute('data-lang', lang);
+      document.documentElement.setAttribute('lang', lang);
+      document.title = lang === 'en'
+        ? 'WebQuest · Echo of the Footprints (Secondary/Baccalaureate)'
+        : 'WebQuest · El eco de las huellas (ESO/Bachillerato)';
+      langButtons.forEach(btn=>{
+        const on = btn.dataset.lang === lang;
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-pressed', on);
+      });
+    }
+
+    langButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=> setLang(btn.dataset.lang));
+    });
+
+    // Idioma por defecto
+    setLang('es');
+
+    function currentLang(){
+      return document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'es';
+    }
+
+    // --- Navegación por pestañas accesible ---
+    const btns = Array.from(document.querySelectorAll('.tab-btn'));
+    const panels = Array.from(document.querySelectorAll('.tab-panel'));
+
+    function activateTab(id){
+      btns.forEach(b=>{
+        const on = b.id === 'tabbtn-'+id;
+        b.setAttribute('aria-selected', on);
+      });
+      panels.forEach(p=>{
+        const on = p.id === 'tab-'+id;
+        p.setAttribute('aria-hidden', !on);
+      });
+    }
+    btns.forEach(b=>b.addEventListener('click',()=>{
+      const id = b.id.replace('tabbtn-','');
+      activateTab(id);
+    }));
+
+    // --- Quiz (bilingüe) ---
+    const keyWords = [
+      'intensidad de carbono','eficiencia energética','renovables','descarbonización','tecnología',
+      'políticas públicas','transporte público','electrificación','cambio de mix','industria eficiente',
+      'economía circular',
+      'carbon intensity','energy efficiency','renewables','decarbonisation','decarbonization','technology',
+      'public policies','public policy','public transport','electrification','energy mix','efficient industry',
+      'circular economy'
+    ];
+
+    const feedbackTexts = {
+      es: {
+        openGood: 'Buen análisis: conectas población con emisiones usando palancas de eficiencia/descarbonización.',
+        openAvg: 'Análisis aceptable: añade ejemplos de eficiencia o descarbonización para mejorar.',
+        openLow: 'Responde relacionando población con emisiones e incluye 2 palancas: eficiencia y mix energético.',
+        mcNo: 'Selecciona una opción.',
+        mcOk: 'Correcto: eficiencia y descarbonización explican la diferencia.',
+        mcBad: 'Revisa: la clave es la intensidad de carbono y la eficiencia energética.',
+        labelQ1: 'Puntuación Q1',
+        labelQ2: 'Puntuación Q2',
+        labelTotal: 'Puntuación total'
+      },
+      en: {
+        openGood: 'Good analysis: you connect population and emissions using efficiency/decarbonisation levers.',
+        openAvg: 'Acceptable analysis: add concrete examples of efficiency or decarbonisation to improve.',
+        openLow: 'Relate population and emissions and include at least two levers: efficiency and energy mix.',
+        mcNo: 'Please select an option.',
+        mcOk: 'Correct: efficiency and decarbonisation explain the difference.',
+        mcBad: 'Review your answer: the key is carbon intensity and energy efficiency.',
+        labelQ1: 'Score Q1',
+        labelQ2: 'Score Q2',
+        labelTotal: 'Total score'
+      }
+    };
+
+    function gradeOpen(text){
+      const lower = text.toLowerCase();
+      const found = keyWords.filter(k=> lower.includes(k));
+      if(found.length >= 4) return {score:5, key:'openGood'};
+      if(found.length >= 3) return {score:4, key:'openGood'};
+      if(found.length >= 2) return {score:3, key:'openAvg'};
+      return {score:1, key:'openLow'};
+    }
+
+    function gradeMC(name, correct){
+      const checked = document.querySelector(`input[name="${name}"]:checked`);
+      if(!checked) return {score:0, key:'mcNo'};
+      return checked.value === correct
+        ? {score:5, key:'mcOk'}
+        : {score:0, key:'mcBad'};
+    }
+
+    document.getElementById('btn-correccion').addEventListener('click',()=>{
+      const lang = currentLang();
+      const t = feedbackTexts[lang];
+
+      // Q1
+      const q1Text = document.querySelector('[data-id="q1"] textarea').value.trim();
+      const r1 = gradeOpen(q1Text);
+      document.querySelector('[data-id="q1"] .feedback').textContent =
+        `${t.labelQ1}: ${r1.score}/5 · ${t[r1.key]}`;
+
+      // Q2
+      const r2 = gradeMC('q2', document.querySelector('[data-id="q2"]').dataset.correct);
+      document.querySelector('[data-id="q2"] .feedback').textContent =
+        `${t.labelQ2}: ${r2.score}/5 · ${t[r2.key]}`;
+
+      const total = r1.score + r2.score;
+      document.getElementById('score').textContent =
+        `${t.labelTotal}: ${total}/10`;
+    });
+
+    document.getElementById('btn-reset').addEventListener('click',()=>{
+      document.querySelector('[data-id="q1"] textarea').value='';
+      document.querySelectorAll('input[name="q2"]').forEach(i=>i.checked=false);
+      document.querySelectorAll('.feedback').forEach(f=>f.textContent='');
+      document.getElementById('score').textContent='';
+    });
+  </script>
+</body>
+</html>
