@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Proyecto – Tu empresa y su Punto Muerto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --azul-oscuro: #0a4f8c;
+      --azul-medio: #0f7abf;
+      --azul-claro: #e0f2ff;
+      --gris-suave: #f5f7fb;
+      --texto: #1f2933;
+      --texto-suave: #52606d;
+      --borde: #d0d7e2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #f0f7ff, #e5ecf5);
+      color: var(--texto);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.4rem 1.8rem;
+      background: linear-gradient(120deg, var(--azul-oscuro), var(--azul-medio));
+      color: white;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-header-main {
+      max-width: 700px;
+    }
+
+    .card-header h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.7rem;
+    }
+
+    .card-header p {
+      margin: 0;
+      font-size: 0.98rem;
+      opacity: 0.95;
+      color: whitesmoke;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.15);
+      font-size: 0.8rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .chip span {
+      font-weight: 600;
+    }
+
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding: 0.6rem 1rem 0.8rem;
+      background: var(--gris-suave);
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .tab-button {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--texto-suave);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.18s ease, color 0.18s ease, transform 0.1s ease;
+    }
+
+    .tab-button:hover {
+      background: rgba(148, 163, 184, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .tab-button.active {
+      background: white;
+      color: var(--azul-oscuro);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+      border: 1px solid var(--borde);
+    }
+
+    .tab-icon {
+      font-size: 1rem;
+    }
+
+    .tabs-content {
+      padding: 1.5rem 1.8rem 1.8rem;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 1.3rem;
+      color: var(--azul-oscuro);
+    }
+
+    h3 {
+      margin-top: 1.1rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.02rem;
+      color: var(--azul-medio);
+    }
+
+    p {
+      margin: 0.15rem 0 0.6rem;
+      font-size: 0.95rem;
+      color: var(--texto-suave);
+      line-height: 1.55;
+    }
+
+    ul {
+      margin: 0.2rem 0 0.7rem 1.2rem;
+      padding: 0;
+      font-size: 0.93rem;
+      color: var(--texto-suave);
+      line-height: 1.5;
+    }
+
+    li + li {
+      margin-top: 0.15rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.4rem 0 0.8rem;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      background: white;
+      color: var(--texto-suave);
+    }
+
+    .pill strong {
+      color: var(--azul-oscuro);
+    }
+
+    .highlight {
+      background: var(--azul-claro);
+      border-left: 4px solid var(--azul-medio);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      margin: 0.5rem 0 0.9rem;
+      font-size: 0.92rem;
+      color: var(--texto-suave);
+    }
+
+    .highlight strong {
+      color: var(--azul-oscuro);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1rem;
+      margin-top: 0.6rem;
+    }
+
+    @media (max-width: 800px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .card-header {
+        padding: 1rem 1.2rem;
+      }
+
+      .tabs-content {
+        padding: 1rem 1.2rem 1.3rem;
+      }
+    }
+
+    .mini-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--texto-suave);
+      margin-bottom: 0.1rem;
+    }
+
+    .steps {
+      counter-reset: step;
+      margin: 0.2rem 0 0.9rem;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 0.55rem;
+      font-size: 0.93rem;
+      color: var(--texto-suave);
+    }
+
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0.1rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 999px;
+      background: var(--azul-medio);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.25);
+    }
+
+    code {
+      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      background: #0b11201a;
+      padding: 0.02rem 0.3rem;
+      border-radius: 4px;
+      font-size: 0.84rem;
+    }
+
+    .code-block {
+      background: #020617;
+      color: #e5e7eb;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 0.84rem;
+      overflow-x: auto;
+      margin: 0.35rem 0 0.75rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(14, 165, 233, 0.1);
+      color: var(--azul-medio);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-top: 0.4rem;
+    }
+
+    .rubric-table th,
+    .rubric-table td {
+      border: 1px solid var(--borde);
+      padding: 0.45rem 0.4rem;
+      vertical-align: top;
+    }
+
+    .rubric-table th {
+      background: var(--gris-suave);
+      color: var(--texto);
+      font-weight: 600;
+    }
+
+    .rubric-crit {
+      white-space: nowrap;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 0.18rem 0.45rem;
+      border-radius: 999px;
+      background: var(--gris-suave);
+      color: var(--texto-suave);
+    }
+
+    .footer-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.6rem;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <!-- CABECERA -->
+      <header class="card-header">
+        <div class="card-header-main">
+          <h1>Proyecto: Tu empresa y su Punto Muerto</h1>
+          <p>
+            Diseña una empresa realista, investiga el mercado, calcula tu
+            <strong>Punto Muerto</strong>, analiza tu estructura de costes y
+            descubre tu <strong>GAO</strong>. Después, defiende tu proyecto
+            como si fueras emprendedor ante posibles inversores.
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.4rem;align-items:flex-end;">
+          <div class="chip">
+            <span>📊 Punto Muerto &amp; GAO</span>
+          </div>
+          <div class="chip">
+            🎓 ESO / Bachillerato · Economía 
+          </div>
+        </div>
+      </header>
+
+      <!-- PESTAÑAS -->
+      <nav class="tabs-bar">
+        <button class="tab-button active" data-tab="tab-inicio">
+          <span class="tab-icon">🏁</span> Inicio
+        </button>
+        <button class="tab-button" data-tab="tab-proyecto">
+          <span class="tab-icon">🧩</span> El proyecto
+        </button>
+        <button class="tab-button" data-tab="tab-pasos">
+          <span class="tab-icon">🧭</span> Pasos del trabajo
+        </button>
+        <button class="tab-button" data-tab="tab-calculos">
+          <span class="tab-icon">📐</span> Cálculos clave
+        </button>
+        <button class="tab-button" data-tab="tab-entrega">
+          <span class="tab-icon">📦</span> Entrega y rúbrica
+        </button>
+        <button class="tab-button" data-tab="tab-expo">
+          <span class="tab-icon">🎤</span> Guion exposición
+        </button>
+      </nav>
+
+      <!-- CONTENIDO -->
+      <section class="tabs-content">
+        <!-- TAB 1: INICIO -->
+        <article id="tab-inicio" class="tab-content active">
+          <div class="grid-2">
+            <div>
+              <div class="mini-title">Contexto</div>
+              <h2>Del papel al escenario: tu empresa entra en juego</h2>
+              <p>
+                Imagina que has encontrado una idea de producto que te encanta:
+                algo que podrías fabricar y vender de verdad. No basta con que
+                “te guste”: necesitas demostrar que <strong>los números
+                funcionan</strong> y que tu empresa no se hundirá antes de
+                cruzar el puente del <em>punto muerto</em>.
+              </p>
+              <p>
+                En este proyecto vas a crear una empresa desde cero, elegir un
+                producto real, investigar precios de mercado, calcular tus
+                <strong>costes</strong> y descubrir cuántas unidades debes vender
+                para no perder dinero. Además, analizarás el
+                <strong>GAO</strong> para medir cuánto riesgo asumes cuando las
+                ventas suben o bajan.
+              </p>
+
+              <div class="highlight">
+                <strong>Objetivo:</strong> al finalizar el proyecto, serás capaz
+                de explicar con tus propios datos qué es el Punto Muerto, qué
+                estructura de costes tiene tu empresa y qué tan sensible es tu
+                beneficio ante cambios en las ventas.
+              </div>
+            </div>
+            <div>
+              <div class="mini-title">Ficha rápida</div>
+              <h3>🗂 Resumen del proyecto</h3>
+              <ul>
+                <li>Trabajarás en <strong>equipo</strong> (o según lo decida el profesor).</li>
+                <li>Elegirás un <strong>producto real</strong> del mercado.</li>
+                <li>Construirás una <strong>estructura de costes</strong> coherente.</li>
+                <li>Calcularás <strong>Punto Muerto</strong> y <strong>GAO</strong>.</li>
+                <li>Entregarás un <strong>informe + hoja de cálculo + presentación</strong>.</li>
+                <li>Defenderás tu empresa en una <strong>exposición de máximo 20 minutos.</strong>.</li>
+              </ul>
+
+              <div class="pill-row">
+                <div class="pill">
+                  🔍 <strong>Investigación real</strong>
+                </div>
+                <div class="pill">
+                  📊 <strong>Números y gráficos</strong>
+                </div>
+                <div class="pill">
+                  🎙 <strong>Comunicación oral</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- TAB 2: EL PROYECTO -->
+        <article id="tab-proyecto" class="tab-content">
+          <h2>Qué tienes que hacer exactamente</h2>
+          <p>
+            Tu misión es diseñar una pequeña empresa viable, que produzca un
+            <strong>producto único y concreto</strong>, con datos reales de
+            mercado. No vale inventarse precios a ojo: deberás justificar cada
+            número que aparezca en tu trabajo.
+          </p>
+
+          <h3>1. Elegir la empresa y el producto</h3>
+          <ul>
+            <li>Escoge un <strong>producto físico</strong> (no solo servicios).</li>
+            <li>Asegúrate de que exista en el mercado y puedas encontrar precios.</li>
+            <li>Define brevemente las características del producto (tamaño, materiales, uso…).</li>
+          </ul>
+
+          <h3>2. Investigar el mercado</h3>
+          <ul>
+            <li>Busca al menos <strong>3 competidores</strong> que vendan algo similar.</li>
+            <li>Anota precios, formatos, ofertas, etc.</li>
+            <li>Guarda <strong>capturas de pantalla</strong> o enlaces para justificar tus datos.</li>
+          </ul>
+
+          <h3>3. Diseñar la estructura de costes</h3>
+          <ul>
+            <li>Determina de qué tamaño será tu empresa: local, taller, online…</li>
+            <li>Calcula los <strong>Costes Fijos (CF)</strong>: alquiler, salarios, seguros, luz fija, Internet, amortización de maquinaria, etc.</li>
+            <li>Calcula el <strong>Coste Variable unitario (CVu)</strong>: materiales, energía por unidad, envases, embalaje, comisiones variables…</li>
+          </ul>
+
+          <h3>4. Fijar el precio de venta (P)</h3>
+          <ul>
+            <li>Decide el <strong>precio de venta</strong> de tu producto.</li>
+            <li>Comprueba que tiene sentido comparándolo con tus competidores.</li>
+            <li>Justifica por escrito por qué ese precio es razonable.</li>
+          </ul>
+
+          <h3>5. Calcular Punto Muerto, ventas de equilibrio y GAO</h3>
+          <p>
+            Con CF, CVu y P podrás calcular cuántas unidades necesitas vender para no
+            perder dinero, cuántos euros supone eso en ventas y qué tan arriesgada es
+            tu estructura de costes.
+          </p>
+
+          <h3>6. Preparar el informe y la presentación</h3>
+          <p>
+            Con toda la información anterior, elaborarás un
+            <strong>informe técnico</strong>, una <strong>hoja de cálculo</strong>
+            con fórmulas y una <strong>presentación visual</strong> para exponer
+            tu proyecto en clase.
+          </p>
+
+          <div class="highlight">
+            Piensa que estás preparando un dossier para un posible inversor: tiene
+            que poder entender tu negocio, revisar tus números y confiar en que
+            conoces tu Punto Muerto y tus riesgos.
+          </div>
+        </article>
+
+        <!-- TAB 3: PASOS DEL TRABAJO -->
+        <article id="tab-pasos" class="tab-content">
+          <h2>Pasos del trabajo (guía de ruta)</h2>
+          <p>
+            Sigue estos pasos en orden. Puedes repartirlos entre los miembros del
+            equipo, pero todos debéis entender el conjunto.
+          </p>
+
+          <ol class="steps">
+            <li>
+              <strong>Brainstorming de ideas y elección del producto.</strong>
+              Definid qué vais a fabricar y por qué puede tener salida en el mercado.
+            </li>
+            <li>
+              <strong>Investigación de mercado.</strong>
+              Buscad competidores (si los hay), precios, formatos y haced capturas para el
+              informe.
+            </li>
+            <li>
+              <strong>Diseño básico de la empresa.</strong>
+              ¿Tendréis local físico? ¿Cuántos trabajadores? ¿Qué maquinaria
+              necesitáis?
+            </li>
+            <li>
+              <strong>Cálculo de Costes Fijos (CF).</strong>
+              Elaborad una tabla con TODOS los CF mensuales, con pequeñas notas
+              explicativas.
+            </li>
+            <li>
+              <strong>Cálculo del Coste Variable unitario (CVu).</strong>
+              Calculad el coste de producir una sola unidad de producto, con
+              detalle de materiales y consumos.
+            </li>
+            <li>
+              <strong>Decisión del precio de venta (P).</strong>
+              Fijad el precio final de vuestro producto y justificadlo usando
+              los datos de mercado.
+            </li>
+            <li>
+              <strong>Cálculo del Punto Muerto (q<sup>💖</sup>).</strong>
+              Aplicad las fórmulas y analizad el significado del resultado.
+            </li>
+            <li>
+              <strong>Cálculo del GAO en un nivel de producción realista.</strong>
+              Escoged un volumen de producción probable, calculad el GAO
+              para ese punto y explicad el resultado.
+            </li>
+            <li>
+              <strong>Cálculo del Umbral de flexibilidad.</strong>
+              Calculad el Umbral de Flexibilidad y explicad, de forma coherente, el resultado obtenido.              
+            </li>
+            <li>
+              <strong>Elaboración de gráficos.</strong>
+              Dibujad el gráfico de Punto Muerto (IT, CF, CV, CT, puntos clave: IT=CF, q<sup>💖</sup> y CF=CV) y explicadlo en conjunto.
+              Si es posible, comparad escenarios de ventas (Opcional - Se verá más adelante).
+            </li>
+            <li>
+              <strong>Informe, hoja de cálculo y presentación.</strong>
+              Organizad todo en un informe ordenado, una hoja Excel/Sheets
+              con fórmulas y una presentación de apoyo.
+            </li>
+          </ol>
+
+          <div class="highlight">
+            <strong>Consejo:</strong> no esperes al final para hacer la hoja de
+            cálculo. Trabaja desde el principio con Excel/Sheets y ve
+            comprobando que las fórmulas funcionan.
+          </div>
+        </article>
+
+        <!-- TAB 4: CÁLCULOS CLAVE -->
+        <article id="tab-calculos" class="tab-content">
+          <h2>Cálculos clave del proyecto</h2>
+          <p>
+            Estos son los cálculos que deben aparecer, como mínimo, en tu hoja
+            de cálculo y en tu informe.
+          </p>
+
+          <h3>1. Costes Fijos (CF)</h3>
+          <p>
+            Suma de todos los costes que no dependen directamente de cuántas
+            unidades produces:
+          </p>
+          <ul>
+            <li>Alquiler o hipoteca del local.</li>
+            <li>Sueldos fijos.</li>
+            <li>Seguros, Internet, licencias, etc.</li>
+            <li>Amortización de maquinaria y equipo.</li>
+          </ul>
+
+          <h3>2. Coste Variable unitario (CVu)</h3>
+          <p>
+            Es el coste de fabricar <strong>una unidad</strong> de tu producto:
+          </p>
+          <ul>
+            <li>Materias primas y componentes.</li>
+            <li>Energía consumida por unidad.</li>
+            <li>Envases, embalajes, etiquetas, comisiones variables…</li>
+          </ul>
+
+          <h3>3. Precio de venta (P)</h3>
+          <p>
+            Debe ser coherente con el mercado y, a la vez, permitir cubrir
+            costes y obtener margen. Debes justificarlo con tus datos de
+            competidores (De momento usad referencias. Más adelante veremos cómo se establece.)
+          </p>
+
+          <h3>4. Punto Muerto en unidades (q<sup>💖</sup>)</h3>
+          <div class="code-block">
+          q<sup>💖</sup> = CF / (P − CVu)
+          </div>
+          <p>
+            Interpreta q<sup>💖</sup>: número de unidades que tienes que vender para que
+            tu beneficio sea igual a 0 (ni ganas ni pierdes).
+          </p>
+
+          <h3>5. Punto Muerto en € </h3>
+          <div class="code-block">
+          Nivel de ventas = q<sup>💖</sup> · p
+          </div>
+          <p>
+            Indica cuántos <strong>euros</strong> necesitas facturar para
+            cubrir todos tus costes.
+          </p>
+
+          <h3>6. GAO (Grado de Apalancamiento Operativo)</h3>
+          <p>
+            Calcula el GAO para un nivel de producción Q que consideres realista
+            para tu empresa:
+          </p>
+          <div class="code-block">
+          GAO = (Q · (P − CVu)) / (Q · (P − CVu) − CF)
+          </div>
+          <p>
+            <strong>Interpretación básica:</strong>
+          </p>
+          <ul>
+            <li>Si el GAO es alto → tu beneficio reacciona mucho a cambios en ventas.</li>
+            <li>Si el GAO es bajo → tu beneficio es más estable.</li>
+          </ul>
+          <h3>7. Umbral de Flexibilidad</h3>
+          <p>
+            Calcula el Umbral de Flexibilidad e indica si la empresa se encuentra en una 
+            situación de rigidez o de flexibilidad y qué implica eso. 
+            Identifica, primero, que tipo de costes predominan en la empresa y, después, 
+            procede con el Umbral de Flexibilidad.
+          </p>
+          <div class="highlight">
+            Asegúrate de que todos estos cálculos estén en tu hoja de cálculo
+            con <strong>fórmulas visibles</strong>, no solo con números
+            escritos “a mano”.
+          </div>
+        </article>
+
+        <!-- TAB 5: ENTREGA Y RÚBRICA -->
+        <article id="tab-entrega" class="tab-content">
+          <h2>Qué debes entregar y cómo se te evaluará</h2>
+
+          <h3>1. Entregables obligatorios</h3>
+          <ul>
+            <li>
+              <strong>Informe técnico</strong> (PDF):
+              descripción de la empresa, estudio de mercado básico (se verá en profundidad más adelante), estructura de
+              costes, cálculos, gráficos y conclusiones.
+            </li>
+            <li>
+              <strong>Hoja de cálculo</strong> (Excel o Google Sheets exportado)
+              con todas las fórmulas.
+            </li>
+            <li>
+              <strong>Presentación</strong> (PowerPoint, Canva, Genially u otra
+              herramienta) para la exposición en clase.
+            </li>
+            <li>
+              <strong>Evidencias de investigación</strong>:
+              capturas de precios, enlaces a webs de proveedores y competidores.
+            </li>
+          </ul>
+
+          <h3>2. Criterios de evaluación (rúbrica resumida)</h3>
+          <table class="rubric-table">
+            <thead>
+              <tr>
+                <th class="rubric-crit">Criterio</th>
+                <th>Excelente (10)</th>
+                <th>Bien (7)</th>
+                <th>Suficiente (5)</th>
+                <th>Insuficiente (&lt;5)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rubric-crit"><strong>Investigación realista</strong></td>
+                <td>
+                  Fuentes reales, precios verificados, capturas claras y bien
+                  citadas.
+                </td>
+                <td>
+                  Fuentes correctas pero menos completas o con pocas capturas.
+                </td>
+                <td>
+                  Algunos datos poco precisos o sin evidencias claras.
+                </td>
+                <td>
+                  Datos incoherentes o inventados sin justificación.
+                </td>
+              </tr>
+              <tr>
+                <td class="rubric-crit"><strong>Cálculos económicos</strong></td>
+                <td>
+                  Todos los cálculos correctos, coherentes y bien explicados.
+                </td>
+                <td>
+                  1–2 errores leves que no cambian la conclusión general.
+                </td>
+                <td>
+                  Errores que afectan a la interpretación del Punto Muerto o del GAO.
+                </td>
+                <td>
+                  Cálculos incompletos, erróneos o sin explicación.
+                </td>
+              </tr>
+              <tr>
+                <td class="rubric-crit"><strong>Gráficos, cálculos e interpretaciones</strong></td>
+                <td>
+                  Gráfico de Punto Muerto claro y correcto; análisis de los elementos (GAO y los diferentes umbrales)
+                  profundo y bien interpretado.
+                </td>
+                <td>
+                  Gráfico correcto; análisis de los elementos breve pero aceptable.
+                </td>
+                <td>
+                  Gráfico incompleto o poco claro; interpretación de los elementos muy básica.
+                </td>
+                <td>
+                  Sin gráficos o con errores graves; sin interpretación de los elementos.
+                </td>
+              </tr>
+              <tr>
+                <td class="rubric-crit"><strong>Informe escrito</strong></td>
+                <td>
+                  Muy bien organizado, lenguaje cuidado, uso adecuado de
+                  términos económicos.
+                </td>
+                <td>
+                  Estructura clara con algunos fallos de redacción o formato.
+                </td>
+                <td>
+                  Informe comprensible pero desordenado o con errores frecuentes.
+                </td>
+                <td>
+                  Informe incompleto, confuso o difícil de seguir.
+                </td>
+              </tr>
+              <tr>
+                <td class="rubric-crit"><strong>Presentación oral</strong></td>
+                <td>
+                  Exposición segura, fluida y repartida; dominan el contenido y
+                  responden a preguntas.
+                </td>
+                <td>
+                  Exposición clara con alguna duda puntual o reparto desigual.
+                </td>
+                <td>
+                  Lectura excesiva o falta de claridad; conocimiento parcial.
+                </td>
+                <td>
+                  Desconocimiento evidente del proyecto o imposibilidad de
+                  explicar los números.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="tag-row">
+            <div class="tag">📘 Saber hacer con números</div>
+            <div class="tag">🤝 Trabajo cooperativo</div>
+            <div class="tag">🧠 Pensamiento crítico</div>
+            <div class="tag">🎯 Comunicación y argumentación</div>
+          </div>
+
+          <p class="footer-note">
+            Nota 1: esta rúbrica se ajusta a los criterios
+            oficiales (LOMLOE) del curso y la materia.<br>
+            Nota 2: aunque la exposición sea grupal, 
+            cada integrante es evaluado de forma individual.
+          </p>
+        </article>
+
+        <!-- TAB 6: GUION EXPOSICIÓN -->
+        <article id="tab-expo" class="tab-content">
+          <h2>Guion para la exposición oral</h2>
+          <p>
+            La exposición durará aproximadamente <strong>20 minutos como máximo</strong>.
+            Todos los miembros del equipo deben intervenir.
+          </p>
+
+          <h3>Propuesta de estructura</h3>
+          <ol class="steps">
+            <li>
+              <strong>Presentación del equipo y de la empresa.</strong>
+              Nombre de la empresa, producto elegido y breve eslogan o frase
+              que resuma vuestra propuesta.
+            </li>
+            <li>
+              <strong>Estudio de mercado.</strong>
+              Qué competidores habéis analizado, qué precios habéis encontrado
+              y cómo se posiciona vuestro producto frente a ellos.
+            </li>
+            <li>
+              <strong>Estructura de costes.</strong>
+              Resumen de vuestros Costes Fijos y del Coste Variable unitario.
+              Explicad solo lo esencial: qué os hace más rígidos o más
+              flexibles.
+            </li>
+            <li>
+              <strong>Cálculo del Punto Muerto.</strong>
+              Mostrad la fórmula, explicad qué valores habéis usado
+              (CF, P, CVu) y qué resultado habéis obtenido (Q* y ventas*).
+            </li>
+            <li>
+              <strong>Interpretación del Punto Muerto.</strong>
+              Explicad con palabras sencillas qué significa vender esa cantidad
+              de unidades o llegar a esas ventas en euros.
+            </li>
+            <li>
+              <strong>GAO y estructura de costes.</strong>
+              Mostrad el valor del GAO para un nivel de producción realista y
+              explicad si vuestra empresa es más “rígida” o más “flexible” ante
+              cambios en las ventas.
+            </li>
+            <li>
+              <strong>Conclusiones y recomendaciones.</strong>
+              ¿Creéis que vuestra empresa es viable? ¿Qué decisiones tomaríais
+              (subir/bajar CF, cambiar P, renegociar proveedores…) para mejorar
+              vuestro Punto Muerto o reducir el riesgo?
+            </li>
+          </ol>
+
+          <div class="highlight">
+            <strong>Consejo:</strong> no leáis el guion. Usad la presentación
+            como apoyo visual y hablad mirando al público, como si de verdad
+            estuvierais defendiendo vuestra idea ante posibles inversores.
+          </div>
+        </article>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const buttons = document.querySelectorAll(".tab-button");
+      const tabs = document.querySelectorAll(".tab-content");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.getAttribute("data-tab");
+
+          buttons.forEach((b) => b.classList.remove("active"));
+          tabs.forEach((t) => t.classList.remove("active"));
+
+          btn.classList.add("active");
+          const target = document.getElementById(targetId);
+          if (target) target.classList.add("active");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
