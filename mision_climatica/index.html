@@ -485,13 +485,30 @@
     margin-top:10px;
   }
 
-  .perfiles-grid span{
-    background:var(--azul-suave);
-    padding:6px 12px;
+  .perfiles-grid a{
+    display:inline-flex;
+    align-items:center;
+    padding:6px 14px;
+
     border-radius:999px;
+
+    background: var(--azul-suave);
+    border:1px solid rgba(10,96,255,.18);
+
+    color: var(--azul-osc);
     font-weight:600;
-    color:var(--azul-osc);
+    text-decoration:none;
+
+    transition: all .25s ease;
   }
+
+  .perfiles-grid a:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(10,96,255,.15);
+    background: linear-gradient(135deg, #0a60ff, #0639a9);
+    color:#fff;
+  }
+
 
   .usos-grid{
     display:grid;
@@ -1874,7 +1891,7 @@ header .hero > img.hero-art{
         </div>
 
         <!-- Perfiles educativos -->
-        <div class="grid">
+        <!-- <div class="grid">
           <div class="card">
             <h3>Perfiles educativos de referencia</h3>
             <div class="perfiles-grid">
@@ -1886,6 +1903,14 @@ header .hero > img.hero-art{
               <span>@carmen_llopispablos</span>
             </div>
           </div>
+        </div> -->
+        <div class="perfiles-grid">
+          <a href="https://www.instagram.com/rosaliarte/" target="_blank" rel="noopener">@rosaliarte</a>
+          <a href="https://www.instagram.com/ninocerveram/" target="_blank" rel="noopener">@ninocerveram</a>
+          <a href="https://www.instagram.com/entre_tea/" target="_blank" rel="noopener">@entre_tea</a>
+          <a href="https://www.instagram.com/econosublime/" target="_blank" rel="noopener">@econosublime</a>
+          <a href="https://www.instagram.com/albertoptfp/" target="_blank" rel="noopener">@albertoptfp</a>
+          <a href="https://www.instagram.com/carmen_llopispablos/" target="_blank" rel="noopener">@carmen_llopispablos</a>
         </div>
 
         <!-- Usos -->
