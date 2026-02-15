@@ -1,4 +1,4 @@
-# 🌍 WebQuest: Huella de Carbono, Población y Crecimiento (ES/EN)
+# 🌍 WebQuest: Huella de Carbono, Población y Crecimiento Versión (ES/EN) (pero aplicable a todas las WebQuest de este entorno)
 
 **WebQuest bilingüe (Español/Inglés)** diseñada para alumnado de **ESO/Bachillerato**, centrada en la relación entre **crecimiento poblacional**, **emisiones de CO₂** y **sostenibilidad global**.  
 Incluye narrativa inmersiva, actividades guiadas, recursos interactivos, evaluación y un **quiz autocorregible**.  
