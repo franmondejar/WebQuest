@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MISIÓN CLIMÁTICA · 3.º ESO · Emprendimiento Personal y Social</title>
+  <meta name="description" content="MISIÓN CLIMÁTICA · Actividad colaborativa: EN-ROADS + empresa social + Instagram + Drive + Canva." />
+<style>
+  :root{
+    --azul:#0a60ff;
+    --azul-osc:#0639a9;
+    --azul-suave:#e9f0ff;
+    --blanco:#ffffff;
+    --tinta:#1f2a33;
+    --muted:#5b6670;
+    --borde:#e6e9ef;
+    --ok:#2e7d32;
+    --warn:#ef6c00;
+    --err:#c62828;
+    --radius:18px;
+    --shadow:0 14px 32px rgba(10,96,255,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--tinta);background:linear-gradient(180deg,#ffffff, #f6f9ff);}
+  .wrap{max-width:1100px;margin-inline:auto;padding:clamp(16px,2.5vw,28px);}
+
+  /* ===== HEADER ===== */
+  header{
+    background:linear-gradient(135deg,var(--azul),var(--azul-osc));
+    color:var(--blanco);
+    border-bottom:4px solid var(--azul-osc);
+
+    /* CLAVE: compensa que .tabs sube -28px dentro del header */
+    padding-bottom:28px;
+  }
+
+  /* Header en 2 columnas (texto + imagen) */
+  .hero{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:24px;
+    align-items:start;
+    padding:42px 0;
+  }
+
+  .hero h1{margin:0 0 10px 0;font-weight:800;letter-spacing:.2px;line-height:1.15;font-size:clamp(26px,3.1vw,42px);}
+  .hero p{margin:8px 0 0 0;opacity:.95;line-height:1.5;font-size:clamp(14px,1.4vw,18px);}
+  .chip{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .7rem;border-radius:999px;background:rgba(255,255,255,.18);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.28);font-weight:600;font-size:.9rem}
+
+  /* Imagen del header: NO se recorta y NO invade pestañas */
+  .hero-art{
+    width: min(380px, 38vw);
+    max-width: 420px;
+    height:auto;
+
+    /* CLAVE: evita que baje hasta la zona de las pestañas */
+    max-height: 240px;
+
+    object-fit: contain;      /* no recorta */
+    display:block;
+    border-radius:16px;
+    justify-self:end;
+    align-self:start;
+    margin-top:6px;
+  }
+
+  /* Responsive header */
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr}
+    .hero-art{
+      width:100%;
+      max-width:520px;
+      max-height:none;
+      margin-top:14px;
+      justify-self:center;
+    }
+  }
+
+  /* ===== TABS ===== */
+  .tabs{
+    margin-top:-28px;
+    background:var(--blanco);
+    border:1px solid var(--borde);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+
+    /* CLAVE: por encima de lo que venga detrás */
+    position:relative;
+    z-index:5;
+  }
+
+  .tab-nav{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--borde);background:var(--azul-suave);}
+  .tab-btn{appearance:none;border:0;background:transparent;padding:14px 18px;font-weight:700;color:var(--azul-osc);cursor:pointer;position:relative;display:flex;align-items:center;gap:10px}
+  .tab-btn[aria-selected="true"]{background:var(--blanco);color:var(--azul);}
+  .tab-btn[aria-selected="true"]::after{content:"";position:absolute;inset:auto 0 -1px 0;height:3px;background:var(--azul);}
+
+  /* === PANEL BASE (NORMAL) === */
+  .tab-panel{display:none;padding:22px 22px 26px 22px;}
+  .tab-panel[aria-hidden="false"]{display:block;}
+
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr);}
+  .card{grid-column:span 12;background:var(--blanco);border:1px solid var(--borde);border-radius:14px;padding:16px 16px 18px 16px;box-shadow:0 6px 20px rgba(10,96,255,.06);}
+  .card h3{margin:.2rem 0 .6rem 0;font-size:1.1rem}
+  .card.card-compact{padding:0;} /* opcional */
+
+  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  .kpi .pill{background:var(--azul-suave);border:1px solid var(--borde);border-radius:999px;padding:10px 12px;font-weight:600;color:var(--azul-osc);text-align:center}
+
+  .intro-cine{background:linear-gradient(180deg,#0b1b3a,#0f316a);color:#e6eeff;border:0}
+  .intro-cine p{color:#eaf1ff;opacity:.95}
+  .intro-cine .lead{font-size:1.05rem;line-height:1.65}
+
+  .literal{white-space:normal; line-height:1.55; font-size:1rem; color:var(--tinta)}
+  .literal.light{color:#eaf1ff}
+
+  /* FIX definitivo para listas dentro de .literal */
+  .literal ul,
+  .literal ol{
+    white-space: normal;
+    margin: 6px 0 0 0;
+    padding-left: 18px;
+  }
+  .literal li{
+    margin: 2px 0;
+    line-height: 1.25;
+  }
+
+  /* Defaults headings/lists */
+  .tab-panel h2{ margin: 0 0 12px 0; line-height:1.15; }
+  .tab-panel ul{ margin: 10px 0 0 0; padding-left: 18px; }
+  .tab-panel li{ margin: 6px 0; line-height: 1.4; }
+
+  footer{margin:28px 0 8px 0;color:var(--muted);font-size:.9rem}
+
+  /* ===== SISTEMA DE DENSIDAD (FUNCIONA SIEMPRE) ===== */
+  .tab-panel.dense{ padding: 14px 16px 16px 16px; }
+  .tab-panel.dense-2{ padding: 10px 12px 12px 12px; }
+
+  .tab-panel.dense h2{ margin: 0 0 10px 0; }
+  .tab-panel.dense-2 h2{ margin: 0 0 8px 0; }
+
+  .tab-panel.dense .grid{ gap: 10px; }
+  .tab-panel.dense-2 .grid{ gap: 8px; }
+
+  .tab-panel.dense .card{ padding: 12px 14px 12px 14px; }
+  .tab-panel.dense-2 .card{ padding: 10px 12px 10px 12px; }
+
+  .tab-panel.dense ul{ margin: 8px 0 0 0; padding-left: 18px; }
+  .tab-panel.dense-2 ul{ margin: 6px 0 0 0; padding-left: 18px; }
+
+  .tab-panel.dense li{ margin: 4px 0; line-height: 1.32; }
+  .tab-panel.dense-2 li{ margin: 2px 0; line-height: 1.22; }
+
+  .tab-panel.dense .literal{ line-height: 1.25; }
+  .tab-panel.dense-2 .literal{ line-height: 1.15; }
+
+  /* ===== DENSE-3 (PRUEBA ATÓMICA) ===== */
+  .tab-panel.dense-3{
+    outline: 8px solid magenta !important;
+    background: rgba(255,0,255,.08) !important;
+    padding: 48px 48px 56px 48px !important;
+  }
+  .tab-panel.dense-3 .grid{ gap: 32px !important; }
+  .tab-panel.dense-3 .card{ padding: 30px 32px !important; }
+  .tab-panel.dense-3 h2{ margin-bottom: 28px !important; }
+  .tab-panel.dense-3 ul{ margin-top: 22px !important; padding-left: 28px !important; }
+  .tab-panel.dense-3 li{ margin: 16px 0 !important; line-height: 1.9 !important; }
+
+  .tab-panel.tight-h2{
+    --h2-mb: 2px;
+    --panel-pad: 12px 16px 16px 16px;
+  }
+
+  .literal ul, .literal ol,
+  .literal table, .literal .grid,
+  .card ul, .card ol{
+    white-space: normal;
+  }
+
+  /* ===== GRUPOS Y ROLES (pills + iconos) ===== */
+  .roles-pills{
+    display:grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 18px;
+    justify-items:center;
+    margin: 10px 0 14px 0;
+  }
+
+  .role-pill{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    border: 1px solid rgba(0,0,0,.08);
+  }
+
+  .role-arquitecto{ background: #e9f0ff; color:#0639a9; }
+  .role-guardian{   background: #eaf7ea; color:#2e7d32; }
+  .role-ingeniero{  background: #fff6df; color:#6a4a00; }
+  .role-voz{        background: #ffe8db; color:#7a2f00; }
+
+  .roles-icons{
+    display:grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 18px;
+    justify-items:center;
+    margin: 0 0 14px 0;
+  }
+
+  .role-figure{
+    margin:0;
+    display:flex;
+    justify-content:center;
+  }
+
+  .role-img{
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 999px;
+    padding: 10px;
+    border: 4px solid rgba(10,96,255,.35);
+    box-shadow: 0 8px 18px rgba(0,0,0,.08);
+  }
+
+  .role-img.role-arquitecto{ border-color: rgba(6,57,169,.55); }
+  .role-img.role-guardian{   border-color: rgba(46,125,50,.55); }
+  .role-img.role-ingeniero{  border-color: rgba(106,74,0,.55); }
+  .role-img.role-voz{        border-color: rgba(122,47,0,.45); }
+
+  .role-tasks{ margin-top: 8px; }
+
+  @media (max-width: 860px){
+    .roles-icons{ grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+  }
+
+  .role-pills > *{ display:inline-flex; }
+
+  .role-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+
+  .role-toggle{
+    border:none;
+    padding:8px 18px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s ease;
+  }
+
+  .role-toggle:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px rgba(0,0,0,.15);
+  }
+
+  .role-toggle.role-arquitecto{ background:#0639a9; color:#fff; }
+  .role-toggle.role-guardian{ background:#2e7d32; color:#fff; }
+  .role-toggle.role-ingeniero{ background:#6a4a00; color:#fff; }
+  .role-toggle.role-voz{ background:#7a2f00; color:#fff; }
+
+  .role-content{
+    display:none;
+    width:100%;
+    margin-top:12px;
+    text-align:left;
+  }
+  .role-content.open{ display:block; }
+  .role-content ul{ margin-top:10px; }
+
+  .roles-wrapper{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 14px;
+  }
+
+  .role-card{ text-align:center; }
+
+  @media (max-width: 1000px){
+    .roles-wrapper{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px){
+    .roles-wrapper{ grid-template-columns: 1fr; }
+  }
+
+  /* ===== DINÁMICA (diagrama 3 pasos) ===== */
+  :root{
+    --rol-guardian: #2e7d32;
+    --rol-ingeniero:#b8860b;
+    --rol-voz:      #f0a97c;
+    --rol-borde:    #3f6fcf;
+    --rol-bg:       #ffffff;
+  }
+
+  .dinamica-frame{
+    border: 4px solid var(--rol-borde);
+    border-radius: 28px;
+    padding: 22px 22px 18px 22px;
+    background: rgba(255,255,255,.55);
+  }
+
+  .dinamica-steps{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 16px;
+    align-items:center;
+    margin: 6px 0 12px 0;
+  }
+
+  .dinamica-box{
+    background: var(--rol-bg);
+    border-radius: 26px;
+    padding: 18px 18px;
+    border: 3px solid rgba(0,0,0,.08);
+    box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    line-height: 1.5;
+  }
+
+  .dinamica-box.guardian{ border-color: color-mix(in srgb, var(--rol-guardian) 80%, #ffffff 20%); }
+  .dinamica-box.ingeniero{ border-color: color-mix(in srgb, var(--rol-ingeniero) 80%, #ffffff 20%); }
+  .dinamica-box.voz{ border-color: color-mix(in srgb, var(--rol-voz) 80%, #ffffff 20%); }
+
+  .dinamica-box strong{ font-weight: 800; }
+
+  .dinamica-arrow{
+    width: 64px;
+    height: 26px;
+    position: relative;
+    align-self:center;
+    justify-self:center;
+  }
+
+  .dinamica-arrow::before{
+    content:"";
+    position:absolute;
+    left:0; top:50%;
+    transform:translateY(-50%);
+    width: 64px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--arrow-color);
+  }
+
+  .dinamica-arrow::after{
+    content:"";
+    position:absolute;
+    right:-8px; top:50%;
+    transform:translateY(-50%);
+    width:0; height:0;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 18px solid var(--arrow-color);
+  }
+
+  .dinamica-arrow.a1{ --arrow-color: var(--rol-guardian); }
+  .dinamica-arrow.a2{ --arrow-color: var(--rol-ingeniero); }
+
+  .dinamica-footer{
+    margin-top: 14px;
+    text-align:center;
+    font-weight: 650;
+  }
+  .dinamica-footer strong{ font-weight: 900; }
+
+  @media (max-width: 980px){
+    .dinamica-steps{ grid-template-columns: 1fr; }
+    .dinamica-arrow{
+      width: 46px;
+      height: 22px;
+      transform: rotate(90deg);
+      margin: 6px auto;
+    }
+  }
+
+  /* ===== ENTORNO (2 fases en columnas) ===== */
+  .phases{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap:16px;
+    margin-top: 12px;
+  }
+
+  .phase{
+    border:1px solid var(--borde);
+    border-radius:14px;
+    padding:14px 14px 12px 14px;
+    background:#fff;
+    box-shadow: 0 6px 20px rgba(10,96,255,.06);
+  }
+
+  .phase-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:8px;
+  }
+
+  .phase-tag{
+    display:inline-flex;
+    align-items:center;
+    padding:4px 10px;
+    border-radius:999px;
+    font-weight:800;
+    font-size:.85rem;
+    border:1px solid rgba(0,0,0,.08);
+  }
+
+  .phase h3{ margin:0; }
+
+  .phase-note{
+    margin-top:10px;
+    color: var(--muted);
+  }
+
+  .phase-drive .phase-tag{ background: var(--azul-suave); color: var(--azul-osc); }
+  .phase-canva .phase-tag{ background: #ffe8db; color:#7a2f00; }
+
+  @media (max-width: 860px){
+    .phases{ grid-template-columns: 1fr; }
+  }
+
+  .text-center{ text-align:center; }
+  .highlight-center{
+    text-align:center;
+    font-weight:600;
+    margin-top:18px;
+    margin-bottom:6px;
+  }
+
+  .text-justify{ text-align: justify; }
+
+  .highlight-justify{
+    text-align:justify;
+    font-weight:600;
+    margin-top:18px;
+    margin-bottom:6px;
+  }
+
+  /* ===== REDES ===== */
+  .insta-card{
+    border:1px solid #e2e6f0;
+    background:linear-gradient(180deg,#ffffff,#f7f9ff);
+  }
+
+  .insta-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:12px;
+  }
+
+  .insta-avatar{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    color:#fff;
+    font-weight:700;
+  }
+
+  .insta-sub{
+    font-size:.9rem;
+    color:var(--muted);
+  }
+
+  .insta-bio{ line-height:1.5; }
+
+  .perfiles-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+  }
+
+  .perfiles-grid span{
+    background:var(--azul-suave);
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:600;
+    color:var(--azul-osc);
+  }
+
+  .usos-grid{
+    display:grid;
+    gap:12px;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    margin-top:12px;
+  }
+
+  .usos-grid div{
+    background:#f4f7ff;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid var(--borde);
+    font-weight:500;
+  }
+
+  .insta-card{
+    transition: transform .35s ease, box-shadow .35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .insta-card:hover{
+    transform: translateY(-6px) scale(1.015);
+    box-shadow: 0 18px 38px rgba(10,96,255,.18);
+  }
+
+  .insta-card::after{
+    content:"";
+    position:absolute;
+    top:-100%;
+    left:-100%;
+    width:200%;
+    height:200%;
+    background:linear-gradient(
+      120deg,
+      transparent 40%,
+      rgba(255,255,255,.25) 50%,
+      transparent 60%
+    );
+    transform:rotate(25deg);
+    transition: all .6s ease;
+    opacity:0;
+  }
+
+  .insta-card:hover::after{
+    top:0;
+    left:0;
+    opacity:1;
+  }
+
+  /* ===== Carrusel usos educativos ===== */
+  .uses-carousel{ margin-top: 14px; }
+
+  .uses-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom: 10px;
+  }
+
+  .uses-title{ margin: 0; font-size: 1.1rem; }
+
+  .uses-controls{ display:flex; gap:8px; }
+
+  .uses-btn{
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,.10);
+    background: #fff;
+    cursor: pointer;
+    font-weight: 800;
+    line-height: 1;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  .uses-btn:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0,0,0,.10);
+  }
+
+  .uses-track{
+    display:flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 6px 4px 10px 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .uses-track::-webkit-scrollbar{ height: 10px; }
+  .uses-track::-webkit-scrollbar-thumb{
+    background: rgba(10,96,255,.18);
+    border-radius: 999px;
+  }
+
+  .use-card{
+    flex: 0 0 auto;
+    width: min(520px, 92%);
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 6px 20px rgba(10,96,255,.06);
+    scroll-snap-align: start;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  .use-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(10,96,255,.12);
+  }
+
+  .use-num{
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight: 800;
+    color: var(--azul-osc);
+    background: var(--azul-suave);
+    border: 1px solid rgba(10,96,255,.18);
+    margin-bottom: 8px;
+  }
+
+  .use-card p{ margin: 0; line-height: 1.45; }
+
+  .uses-hint{
+    margin: 8px 0 0 0;
+    color: var(--muted);
+    font-size: .92rem;
+  }
+
+  /* ===== Fundamentación ===== */
+  .soft-sep{
+    border:0;
+    height:1px;
+    background: var(--borde);
+    margin: 14px 0 12px 0;
+  }
+
+  .fund-kpis{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .fund-pill{
+    display:inline-flex;
+    align-items:center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: var(--azul-suave);
+    border: 1px solid var(--borde);
+    color: var(--azul-osc);
+    font-weight: 700;
+    font-size: .95rem;
+  }
+
+/* ===== PORTADA (TAB INTRO): una columna + botón blindado ===== */
+  #tab-intro .literal{
+    padding-right: 0 !important;
+  }
+
+  /* Asegura el estilo del botón aunque algo lo pise */
+  #tab-intro .mission-start{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:10px !important;
+    margin: 18px auto 6px auto !important;
+    padding: 14px 26px !important;
+
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    letter-spacing: .04em !important;
+
+    color: #fff !important;
+    background: linear-gradient(135deg, #0a60ff, #0639a9) !important;
+
+    border: 0 !important;
+    border-radius: 999px !important;
+
+    cursor: pointer !important;
+
+    box-shadow:
+      0 10px 24px rgba(10,96,255,.35),
+      inset 0 0 0 1px rgba(255,255,255,.18) !important;
+
+    transition: transform .25s ease, box-shadow .25s ease, filter .25s ease !important;
+  }
+
+  #tab-intro .mission-start:hover{
+    transform: translateY(-3px) !important;
+    box-shadow:
+      0 16px 38px rgba(10,96,255,.45),
+      inset 0 0 0 1px rgba(255,255,255,.22) !important;
+    filter: brightness(1.05) !important;
+  }
+
+  #tab-intro .mission-start:active{
+    transform: translateY(-1px) !important;
+  }
+
+  #tab-intro .mission-start-wrap{
+    text-align:center !important;
+  }
+
+  /* ===== HEADER: imagen circular estilo "roles" (SIN recorte) ===== */
+header .hero > img.hero-art{
+  width: 240px !important;
+  height: 240px !important;
+
+  object-fit: contain !important;   /* NO recorta */
+  padding: 14px !important;         /* aire interior para que respire */
+
+  background: rgba(255,255,255,.10) !important;
+  border-radius: 999px !important;
+
+  border: 4px solid rgba(255,255,255,.28) !important;
+  box-shadow: 0 12px 26px rgba(0,0,0,.18) !important;
+  backdrop-filter: blur(3px);
+}
+
+/* ===== HALO LUMINOSO SUTIL (ANIMADO) EN LA IMAGEN DEL HEADER ===== */
+
+  /* Asegura que la imagen queda por encima del fondo, pero sin tapar nada */
+  header .hero{
+    position: relative;
+  }
+
+  header .hero > img.hero-art{
+    position: relative;
+    z-index: 2;              /* la imagen por encima del halo */
+    border-radius: 999px;    /* circular (si quieres mantenerla rectangular, cambia a 16px) */
+  }
+
+  /* Halo usando pseudo-elemento sobre el propio contenedor del header */
+  header .hero::after{
+    content:"";
+    position:absolute;
+    top: 18px;
+    right: 18px;
+
+    /* mismo “anclaje” que la imagen */
+    width: min(420px, 38vw);
+    aspect-ratio: 1 / 1;     /* círculo perfecto */
+    border-radius: 999px;
+
+    /* halo */
+    background: radial-gradient(circle at 30% 30%,
+      rgba(255,255,255,.28) 0%,
+      rgba(10,96,255,.22) 35%,
+      rgba(6,57,169,.18) 55%,
+      rgba(10,96,255,0) 72%
+    );
+
+    filter: blur(10px);
+    opacity: .75;
+    z-index: 1;              /* detrás de la imagen */
+    pointer-events: none;
+
+    /* animación sutil */
+    animation: haloPulse 4.8s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes haloPulse{
+    0%   { transform: scale(1.00); opacity: .65; filter: blur(10px); }
+    50%  { transform: scale(1.06); opacity: .88; filter: blur(14px); }
+    100% { transform: scale(1.00); opacity: .65; filter: blur(10px); }
+  }
+
+  /* En móvil, el halo baja con la imagen sin romper nada */
+  @media (max-width: 860px){
+    header .hero::after{
+      position: static;
+      display:block;
+      margin: 14px auto 0 auto;
+      width: min(420px, 86vw);
+    }
+  }
+
+/* ===== RECUPERAR TIMELINE + MARGEN + BOTÓN SOLO EN TAB CALENDARIO ===== */
+#tab-calendario .timeline{
+  position: relative !important;
+  margin: 30px 0 !important;
+  padding-left: 30px !important;
+}
+
+#tab-calendario .timeline::before{
+  content:"" !important;
+  position:absolute !important;
+  left:10px !important;
+  top:0 !important;
+  bottom:0 !important;
+  width:3px !important;
+  background: linear-gradient(to bottom, #0a60ff, #0639a9) !important;
+  border-radius: 3px !important;
+}
+
+#tab-calendario .timeline-item{
+  position: relative !important;
+  margin-bottom: 28px !important;
+}
+
+#tab-calendario .timeline-marker{
+  position:absolute !important;
+  left:-22px !important;
+  top:6px !important;
+  width:14px !important;
+  height:14px !important;
+  background:#0a60ff !important;
+  border-radius:50% !important;
+  border:3px solid #fff !important;
+  box-shadow: 0 0 0 2px #0a60ff !important;
+}
+
+#tab-calendario .timeline-content h4{
+  margin:0 0 6px 0 !important;
+  font-size:1.05rem !important;
+}
+
+#tab-calendario .timeline-content p{
+  margin:0 !important;
+  line-height:1.5 !important;
+  color: var(--muted) !important;
+}
+
+/* Margen de seguridad */
+#tab-calendario .timeline-buffer{
+  margin-top: 28px !important;
+  padding: 20px 20px 18px 20px !important;
+  background:#f3f6ff !important;
+  border-radius:16px !important;
+  border:2px solid #0a60ff20 !important;
+  position: relative !important;
+}
+
+#tab-calendario .buffer-label{
+  position:absolute !important;
+  top:-12px !important;
+  left:18px !important;
+  background:#fff !important;
+  color:#000 !important;
+  padding:4px 12px !important;
+  font-size:.75rem !important;
+  font-weight:700 !important;
+  border:2px solid #0a60ff20 !important;
+  border-radius:500px !important;
+  letter-spacing:.5px !important;
+}
+
+#tab-calendario .buffer-content p{
+  margin:0 !important;
+  line-height:1.5 !important;
+}
+
+/* Botón "Abrir calendario" (por si te lo pisa algún estilo de <a>) */
+#tab-calendario a.calendar-link{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:8px 12px !important;
+  border-radius:10px !important;
+  font-weight:700 !important;
+  text-decoration:none !important;
+  background: var(--azul-suave) !important;
+  color: var(--azul-osc) !important;
+  border:1px solid var(--borde) !important;
+  white-space:nowrap !important;
+  
+  margin-left: auto !important; /* ← ESTA es la clave */
+}
+#tab-calendario a.calendar-link:hover{
+  filter:brightness(.98) !important;
+  transform:translateY(-1px) !important;
+}
+
+/* 🔧 FIX: fuerza el layout del header del calendario */
+#tab-calendario .calendar-head{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:14px !important;
+  width:100% !important;
+}
+
+/* el bloque de título ocupa el espacio disponible */
+#tab-calendario .calendar-title{
+  display:flex !important;
+  align-items:flex-start !important;
+  gap:10px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* el botón se pega a la derecha */
+#tab-calendario a.calendar-link{
+  margin-left:auto !important;
+  flex: 0 0 auto !important;
+}
+
+/* ===== Licencia Creative Commons ===== */
+
+.autor-licencia{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  margin-top:12px;
+  margin-bottom:16px;
+
+  color:#eaf1ff;
+  opacity:.95;
+}
+
+.cc-icon{
+  height:22px;
+  width:auto;
+  opacity:.9;
+}
+
+
+/* ===== Logo autor ===== */
+
+.autor-logo{
+  display:block;
+  margin:18px auto 0 auto;
+
+  height:46px;
+  width:auto;
+
+  opacity:.95;
+
+  transition: all .3s ease;
+}
+
+.autor-logo:hover{
+  transform:translateY(-2px);
+  opacity:1;
+}
+
+/* contenedor general */
+.autor-licencia-wrap{
+  text-align:center;
+  margin-top:18px;
+}
+
+/* texto */
+.autor-texto{
+  margin-bottom:10px;
+  opacity:.9;
+}
+
+/* fila iconos */
+.autor-iconos{
+  display:inline-flex;          /* ← clave: inline-flex, no flex */
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+}
+
+/* reset total de imágenes */
+.autor-iconos img{
+  display:inline-block;
+  vertical-align:middle;
+  margin:0;
+  padding:0;
+  border:0;
+}
+
+/* icono Creative Commons (más pequeño y proporcionado) */
+.cc-icon{
+  height:22px;
+  width:auto;
+  opacity:.9;
+}
+
+/* tu logo (ligeramente más grande para jerarquía visual) */
+.autor-logo{
+  height:32px;
+  width:auto;
+}
+
+
+/* corrección visual específica CC (porque su SVG tiene margen interno) */
+.cc-icon{
+  transform: translateY(1px);
+}
+
+/* ===== RESTORE FUNDAMENTACIÓN CARDS ===== */
+
+#tab-fundamentacion .fund-blocks{
+  display:grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap:18px !important;
+  margin-top:14px !important;
+}
+
+#tab-fundamentacion .fund-item{
+  background: var(--azul-suave) !important;
+  border:1px solid var(--borde) !important;
+  border-radius:14px !important;
+  padding:16px !important;
+  text-align:center !important;
+  transition: all .25s ease !important;
+  box-shadow: 0 6px 20px rgba(10,96,255,.06) !important;
+}
+
+#tab-fundamentacion .fund-item:hover{
+  transform: translateY(-6px) scale(1.02) !important;
+  box-shadow: 0 18px 38px rgba(10,96,255,.18) !important;
+}
+
+#tab-fundamentacion .fund-icon{
+  font-size:28px !important;
+  margin-bottom:8px !important;
+}
+
+#tab-fundamentacion .fund-item h4{
+  margin:6px 0 6px 0 !important;
+  font-size:1rem !important;
+  color:var(--azul-osc) !important;
+}
+
+#tab-fundamentacion .fund-item p{
+  margin:0 !important;
+  font-size:.9rem !important;
+  line-height:1.35 !important;
+}
+
+/* =========================================
+   CONTENIDO CURRICULAR · ESTÉTICA PRO + LEGIBLE
+   (tarjetas con cabecera pill + botón)
+   ========================================= */
+
+/* Layout: 2 columnas en escritorio (bonito + legible) */
+.curric-bar{
+  display:grid !important;
+  grid-template-columns: repeat(2, minmax(340px, 1fr)) !important;
+  gap: 14px !important;
+  margin-top: 10px !important;
+  align-items: start !important;
+}
+
+/* Tarjeta */
+.curric-item{
+  background: linear-gradient(180deg, #ffffff, #f7f9ff) !important;
+  border: 1px solid var(--borde) !important;
+  border-radius: 16px !important;
+  padding: 14px !important;
+  box-shadow: 0 10px 26px rgba(10,96,255,.08) !important;
+  transition: transform .22s ease, box-shadow .22s ease !important;
+
+  /* Cabecera en 2 columnas: pill izquierda + botón derecha */
+  display:grid !important;
+  grid-template-columns: 1fr auto !important;
+  grid-auto-rows: auto !important;
+  gap: 10px !important;
+  align-items: center !important;
+}
+.curric-item:hover{
+  transform: translateY(-2px) !important;
+  box-shadow: 0 16px 34px rgba(10,96,255,.14) !important;
+}
+
+/* Pill (NO full width; estética tipo “chip”) */
+.curric-pill{
+  width: max-content !important;
+  padding: 8px 12px !important;
+  border-radius: 999px !important;
+  background: rgba(233,240,255,.9) !important;
+  border: 1px solid rgba(10,96,255,.18) !important;
+  color: var(--azul-osc) !important;
+  font-weight: 850 !important;
+  letter-spacing: .2px !important;
+  box-shadow: 0 6px 16px rgba(10,96,255,.08) !important;
+}
+
+/* Botón toggle: pequeño, fino y elegante (NO “pegote azul”) */
+.curric-toggle{
+  width: auto !important;
+  margin-top: 0 !important;
+  padding: 8px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(10,96,255,.18) !important;
+  background: #fff !important;
+  color: var(--azul-osc) !important;
+  font-weight: 850 !important;
+  cursor: pointer !important;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease !important;
+  white-space: nowrap !important;
+}
+.curric-toggle:hover{
+  transform: translateY(-1px) !important;
+  box-shadow: 0 10px 22px rgba(10,96,255,.14) !important;
+  background: rgba(233,240,255,.55) !important;
+}
+.curric-toggle:active{ transform: translateY(0) !important; }
+
+/* Contenido desplegable: ocupa toda la “fila” (ancho completo dentro de la tarjeta) */
+.curric-content{
+  grid-column: 1 / -1 !important;
+  margin-top: 6px !important;
+  padding-top: 10px !important;
+  border-top: 1px dashed rgba(10,96,255,.22) !important;
+
+  font-size: .98rem !important;
+  line-height: 1.55 !important;
+  color: var(--tinta) !important;
+}
+
+/* Listas más limpias */
+.curric-content ul,
+.curric-content ol{
+  margin: 8px 0 0 0 !important;
+  padding-left: 18px !important;
+}
+.curric-content li{
+  margin: 6px 0 !important;
+}
+
+/* Botón maestro “Abrir todo / Cerrar todo” (si existe) */
+.curric-controls{
+  display:flex !important;
+  justify-content:flex-end !important;
+  margin-bottom: 12px !important;
+}
+.curric-master-btn{
+  border: 1px solid rgba(10,96,255,.22) !important;
+  background: #fff !important;
+  color: var(--azul-osc) !important;
+  padding: 10px 14px !important;
+  border-radius: 999px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+  box-shadow: 0 8px 18px rgba(10,96,255,.10) !important;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease !important;
+}
+.curric-master-btn:hover{
+  transform: translateY(-1px) !important;
+  background: rgba(233,240,255,.55) !important;
+  box-shadow: 0 14px 28px rgba(10,96,255,.16) !important;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .curric-bar{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ===== Imagen calendario ===== */
+
+  .calendar-figure{
+    margin: 18px 0 0 0;
+    text-align: center;
+  }
+
+  .calendar-figure img{
+    width: 100%;
+    max-width: 900px;
+    border-radius: 18px;
+    border: 1px solid var(--borde);
+    box-shadow: 0 12px 28px rgba(10,96,255,.12);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+
+  .calendar-figure img:hover{
+    transform: scale(1.02);
+    box-shadow: 0 18px 38px rgba(10,96,255,.18);
+  }
+
+/* ==== enlace a en-roads ==== */
+.enroads-link-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top: 12px;
+}
+
+.enroads-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+  background: rgba(255,255,255,.75);
+  color: #0639a9;
+  border: 1px solid rgba(0,0,0,.10);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.enroads-link:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.10);
+  filter: brightness(.98);
+}
+
+
+</style>
+
+</head>
+
+<body>
+  <header>
+    <div class="wrap hero" role="banner">
+      <div>
+        <span class="chip" aria-label="Nivel educativo y duración">3.º de ESO · 8 sesiones · Emprendimiento Personal y Social</span>
+        <br>
+        <h1>MISIÓN CLIMÁTICA</h1>
+        <p class="lead">¿Dónde está el futuro que nos prometieron?</p>
+        <br>
+        <div class="kpi" aria-hidden="true">
+          <div class="pill">EN-ROADS</div>
+          <div class="pill">Empresa social</div>
+        </div>
+        
+        <p class="lead">Formato: Versión digital</p>
+        <p class="lead">Otras herramientas: Instagram · Drive · Canva</p>
+      </div>
+
+      <img class="hero-art" src="img/imagenportada.png" alt="Misión climática" loading="lazy">   
+
+      
+
+       <!--  <div class="intro-image-frame">
+          <img src="img/imagenportada.png" alt="Planeta Tierra y cambio climático">
+        </div>  -->
+
+      <!-- <img src="img/imagenportada.png" alt="Planeta Tierra y cambio climático"> -->
+
+    </div>
+  </header>
+
+  <main class="wrap" role="main">
+    <section class="tabs" aria-label="Navegación principal por pestañas">
+      <nav class="tab-nav" role="tablist" aria-label="Secciones de la actividad">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-intro" id="tabbtn-intro">📋 Portada/Enunciado</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-contexto" id="tabbtn-contexto">🏫 Contexto</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-curricular" id="tabbtn-curricular">📚 Contenido curricular</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-grupos" id="tabbtn-grupos">👥 Grupos y roles</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-dinamica" id="tabbtn-dinamica">🔁 Dinámica</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-entorno" id="tabbtn-entorno">💻 Entorno</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-calendario" id="tabbtn-calendario">📅 Calendario e hitos</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-redes" id="tabbtn-redes">📱 Redes</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-fundamentacion" id="tabbtn-fundamentacion">🎓 Fundamentación</button>
+      </nav>
+
+      <!-- PORTADA -->
+      <article class="tab-panel intro-cine" role="tabpanel" id="tab-intro" aria-hidden="false" aria-labelledby="tabbtn-intro">
+        <div class="card" style="background:transparent;border-color:rgba(255,255,255,.16);box-shadow:none">
+
+          
+
+          <div class="literal light text-justify">
+
+            <h1 style="margin-bottom:4px;">MISIÓN CLIMÁTICA</h1>
+
+            <p style="font-size:1.15rem; opacity:.95;">
+              Año 2026. El planeta no ha dejado de girar, pero algo ha cambiado.  
+              Las decisiones económicas del pasado han trazado una trayectoria invisible que ahora empieza a hacerse visible.
+            </p>
+
+            <p style="font-size:1.15rem; opacity:.95;">
+              Las temperaturas aumentan. Los recursos se tensan.  
+              Y, por primera vez, una generación tiene delante los datos… y la capacidad de actuar.
+            </p>
+
+            <hr class="soft-sep" style="background:rgba(255,255,255,.20); margin:18px 0;">
+
+            <div style="
+              background:rgba(255,255,255,.06);
+              border:1px solid rgba(255,255,255,.18);
+              border-radius:12px;
+              padding:14px 16px;
+              margin-bottom:18px;
+            ">
+              <strong style="letter-spacing:.04em;">ESTADO DE LA MISIÓN:</strong> ACTIVA  
+              <br>
+              <strong>ROL:</strong> Equipo de análisis y diseño de soluciones sostenibles  
+              <br>
+              <strong>OBJETIVO:</strong> Comprender el impacto del crecimiento económico y diseñar una empresa social capaz de reducir la huella de carbono
+            </div>
+
+            <h3 style="margin:.6rem 0 .4rem 0;">Tu misión</h3>
+
+            <p>
+              Trabajaréis en equipos cooperativos para analizar, mediante el simulador digital EN-ROADS, cómo el crecimiento de la población
+              y el desarrollo económico influyen en las emisiones de CO₂ y en el calentamiento global. Usad las herramientas que consideréis 
+              pertinentes para la misión: hojas de cálculo, editores de texto, maquetas, otrso simuladores, ...
+            </p>
+
+            <p>
+              A partir de los resultados obtenidos, deberéis diseñar una empresa social capaz de intervenir en esa realidad,
+              definiendo el problema que aborda, la solución propuesta y el impacto positivo que genera.
+            </p>
+
+            <p>
+              Finalmente, vuestra propuesta será presentada y difundida a través de una red social educativa,
+              transformando el conocimiento en acción y el análisis en cambio.
+            </p>
+
+            <hr class="soft-sep" style="background:rgba(255,255,255,.20); margin:18px 0;">
+
+            <p style="font-weight:700; text-align:center; font-size:1.05rem;">
+              El futuro no está escrito.  
+              Está esperando decisiones.
+            </p>
+
+            <p style="text-align:center; opacity:.8;">
+              <div class="autor-licencia-wrap">
+
+                <p class="autor-texto">
+                  Diseñada por Francisco Mondéjar · Licencia CC BY-SA 4.0
+                </p>
+
+                <div class="autor-iconos">
+
+                  <img src="img/ccbysa.png"
+                      alt="Licencia Creative Commons BY-SA"
+                      class="cc-icon">
+
+                  <img src="img/logo.png"
+                      alt="Logo Francisco Mondéjar"
+                      class="autor-logo">
+
+                </div>
+
+              </div>
+
+
+            </p>
+
+            <div class="mission-start-wrap">
+
+            <button class="mission-start"
+                    type="button"
+                    onclick="activateTab('grupos')">
+
+              ▶ INICIAR MISIÓN
+
+            </button>
+
+          </div>
+  
+          </div>
+        </div>
+      </article>
+
+      <!-- CONTEXTO -->
+      <article class="tab-panel dense" role="tabpanel" id="tab-contexto" aria-hidden="true" aria-labelledby="tabbtn-contexto">
+        <h2>Contexto</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="literal text-justify"><!--Contexto-->
+              <ul>
+                <li><strong>Etapa educativa:</strong> Educación Secundaria Obligatoria</li>
+                <li><strong>Curso:</strong> 3.º de ESO</li>
+                <li><strong>Materia:</strong> Emprendimiento Personal y Social (Economía)</li>
+                <li><strong>Duración:</strong> 8 sesiones</li>
+                <li><strong>Contenido curricular:</strong>
+                  <ul>
+                    <li>Iniciativa emprendedora y empresa social.</li>
+                    <li>Desarrollo sostenible y responsabilidad social.</li>
+                    <li>Toma de decisiones económicas con impacto social y ambiental.</li>
+                  </ul>
+                </li>
+              </ul>
+             </div> 
+          </div>
+        </div>
+      </article>
+
+      <!-- CONTENIDO CURRICULAR -->
+      <!-- CONTENIDO CURRICULAR -->
+      <article class="tab-panel dense" role="tabpanel" id="tab-curricular" aria-hidden="true" aria-labelledby="tabbtn-curricular">
+        <h2>Contenido curricular</h2>
+
+        <div class="grid">
+          <div class="card">
+            <div class="literal text-justify">
+              
+              <div class="curric-controls">
+                <button id="curric-master-toggle" type="button" class="curric-master-btn">
+                  Abrir todo
+                </button>
+              </div>
+
+              <!-- Barra de secciones (pills) -->
+              <div class="curric-bar" aria-label="Secciones del contenido curricular">
+
+                <!-- 1) Saberes básicos -->
+                <div class="curric-item">
+                  <span class="curric-pill">Saberes básicos</span>
+                  <button class="curric-toggle" type="button" data-target="curric-saberes" aria-expanded="false">
+                    + ver
+                  </button>
+
+                  <div class="curric-content" id="curric-saberes" hidden>
+                    <ul>
+                      <li><strong>B:</strong>
+                        <ul>
+                          <li>Economía social y sostenibilidad.</li>
+                          <li>Compromiso social y sostenibilidad.</li>
+                        </ul>
+                      </li>
+                      <li><strong>C:</strong>
+                        <ul>
+                          <li>La economía circular: un nuevo modelo de producción y consumo.</li>
+                          <li>La economía circular y la sostenibilidad. Análisis de las 7R.</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- 2) Competencias específicas -->
+                <div class="curric-item">
+                  <span class="curric-pill">Competencias específicas</span>
+                  <button class="curric-toggle" type="button" data-target="curric-competencias" aria-expanded="false">
+                    + ver
+                  </button>
+
+                  <div class="curric-content" id="curric-competencias" hidden>
+                    <ul>
+                      <li><strong>CE3:</strong> Analizar y valorar el papel del emprendimiento desde el punto de vista personal, social y productivo teniendo en cuenta, fundamentalmente, su valor social en el cual la creatividad y la innovación tienen una función muy importante como elementos que aportan un servicio a la sociedad, para lo cual se favorecerá el desarrollo de iniciativas emprendedoras con orientación social en el alumnado utilizando entre otras, herramientas como la gamificación que generan entornos de aprendizaje con resultados muy positivos.</li>
+                      <li><strong>CE4:</strong> Reconocer y comprender el papel de la economía social como marco que favorece el desarrollo de una ciudadanía global en el cual las organizaciones empresariales toman una función muy relevante y en las que su responsabilidad es determinante en la generación de efectos positivos sobre el entorno social, reconociendo sistemas de intercambio que plantean soluciones eficaces a problemas económicos locales en un marco global y consiguiendo, de esta forma, actuar de forma solidaria y atender a los retos de una ciudadanía global.</li>
+                      <li><strong>CE5:</strong> Comprender el funcionamiento de la Economía circular y la importante función que tiene en el desarrollo sostenible del entorno socio-económico, reconociendo las necesidades sociales y valorando el papel de la tecnología en la viabilidad de proyectos básicos que el alumnado es capaz de desarrollar incorporando las herramientas que proporciona la economía circular y el retorno que genera hacia entornos locales.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- 3) Criterios asociados -->
+                <div class="curric-item">
+                  <span class="curric-pill">Criterios asociados</span>
+                  <button class="curric-toggle" type="button" data-target="curric-criterios" aria-expanded="false">
+                    + ver
+                  </button>
+
+                  <div class="curric-content" id="curric-criterios" hidden>
+                    <ul>
+                      <li><strong>CE3:</strong>
+                        <ul>
+                          <li><strong>3.3:</strong> Proponer proyectos innovadores que causen impacto real y positivo en el entorno.</li>
+                        </ul>
+                      </li>
+                      <li><strong>CE4:</strong>
+                        <ul>
+                          <li><strong>4.5:</strong> Relacionar la nueva realidad empresarial con las actuales preocupaciones sociales y medioambientales.</li>
+                        </ul>
+                      </li>
+                      <li><strong>CE5:</strong>
+                        <ul>
+                          <li><strong>5.4:</strong> Conocer lo que es la economía circular en el marco de la UE y, por tanto, las 7R.</li>
+                          <li><strong>5.5:</strong> Analizar las necesidades y las formas de transformar, para aplicar tecnologías sostenibles en un proyecto sencillo.</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- 4) Descriptores -->
+                <div class="curric-item">
+                  <span class="curric-pill">Descriptores del perfil</span>
+                  <button class="curric-toggle" type="button" data-target="curric-descriptores" aria-expanded="false">
+                    + ver
+                  </button>
+
+                  <div class="curric-content" id="curric-descriptores" hidden>
+                    <ul>
+                      <li><strong>CE3:</strong> CCL2, CCL3, CP1, STEM1, STEM2, STEM4, CD1, CD2, CD3, CPSAA4, CCEC3.</li>
+                      <li><strong>CE4:</strong> CCL2, CCL3, CP1, STEM1, STEM2, STEM4, CD1, CD2, CD3, CPSAA4, CCEC3.</li>
+                      <li><strong>CE5:</strong> CPSAA3, CPSAA4, CPSAA5, CC1, CC2, CC3, CC4, CE1, CE3.</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div><!-- /curric-bar -->
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- GRUPOS Y ROLES -->
+      <article class="tab-panel dense" role="tabpanel" id="tab-grupos" aria-hidden="true" aria-labelledby="tabbtn-grupos">
+        <h2>Grupos y Roles</h2>
+
+        <div class="grid">
+          <div class="card">
+            <div class="literal text-justify">
+
+              <h3>Grupos</h3>
+              <p>
+                Dado que el grupo clase se compone de 23 alumnos, se trabajará en 5 grupos cooperativos de 4 personas y uno de 3,
+                formados por el docente y bajo la supervisión del mismo, con el objetivo de favorecer la heterogeneidad y el equilibrio
+                de capacidades dentro de cada grupo. Esta organización permite que todos los miembros participen activamente y
+                asuman responsabilidades diferenciadas, fomentando la interdependencia positiva y la responsabilidad individual
+                dentro del trabajo colectivo.
+              </p>
+
+              <h3>Roles</h3>
+              <p>
+                Cada miembro del grupo asumirá un rol específico, con funciones claramente definidas, dentro de la “Misión Climática”,
+                identificado mediante un símbolo que representa su función en el proyecto. Estos roles permiten organizar el trabajo,
+                repartir responsabilidades y asegurar la participación equilibrada de todo el alumnado.
+              </p>
+
+              <div class="roles-wrapper">
+
+                <!-- ARQUITECTO -->
+                <div class="role-card">
+                  <div class="role-pill role-arquitecto">Arquitecto del cambio</div>
+
+                  <figure class="role-figure">
+                    <img src="img/arquitecto.png" alt="Arquitecto del cambio" class="role-img role-arquitecto">
+                  </figure>
+
+                  <button type="button" class="role-toggle role-arquitecto" data-role="arquitecto">+ funciones</button>
+
+                  <div class="role-content" id="arquitecto">
+                    <ul>
+                      <li>Organiza el trabajo del grupo y distribuye las tareas.</li>
+                      <li>Controla el cumplimiento de los plazos establecidos en el calendario.</li>
+                      <li>Facilita la toma de decisiones y el consenso dentro del grupo.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- GUARDIAN -->
+                <div class="role-card">
+                  <div class="role-pill role-guardian">Guardián del planeta</div>
+
+                  <figure class="role-figure">
+                    <img src="img/guardian.png" alt="Guardián del planeta" class="role-img role-guardian">
+                  </figure>
+
+                  <button type="button" class="role-toggle role-guardian" data-role="guardian">+ funciones</button>
+
+                  <div class="role-content" id="guardian">
+                    <ul>
+                      <li>Maneja el simulador EN-ROADS.</li>
+                      <li>Analiza cómo influyen el crecimiento de la población y el desarrollo económico en la huella de carbono.</li>
+                      <li>Registra los resultados más relevantes obtenidos en la simulación.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- INGENIERO -->
+                <div class="role-card">
+                  <div class="role-pill role-ingeniero">Ingeniero de soluciones</div>
+
+                  <figure class="role-figure">
+                    <img src="img/ingeniero.png" alt="Ingeniero de soluciones" class="role-img role-ingeniero">
+                  </figure>
+
+                  <button type="button" class="role-toggle role-ingeniero" data-role="ingeniero">+ funciones</button>
+
+                  <div class="role-content" id="ingeniero">
+                    <ul>
+                      <li>Lidera el diseño de la propuesta de empresa social.</li>
+                      <li>Define la necesidad social o ambiental que se pretende abordar.</li>
+                      <li>Contribuye a concretar la solución propuesta y su impacto positivo.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- VOZ -->
+                <div class="role-card">
+                  <div class="role-pill role-voz">Voz del futuro</div>
+
+                  <figure class="role-figure">
+                    <img src="img/voz.png" alt="Voz del futuro" class="role-img role-voz">
+                  </figure>
+
+                  <button type="button" class="role-toggle role-voz" data-role="voz">+ funciones</button>
+
+                  <div class="role-content" id="voz">
+                    <ul>
+                      <li>Se encarga de la presentación final de la propuesta.</li>
+                      <li>Diseña los mensajes que se difundirán a través de la red social seleccionada.</li>
+                      <li>Actúa como portavoz del grupo en las exposiciones y publicaciones.</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div><!-- /roles-wrapper -->
+
+            </div><!-- /literal -->
+          </div><!-- /card -->
+        </div><!-- /grid -->
+      </article>
+
+
+
+      <!-- DINÁMICA -->
+      <article class="tab-panel dense" role="tabpanel" id="tab-dinamica" aria-hidden="true" aria-labelledby="tabbtn-dinamica">
+        <h2>Dinámica de trabajo</h2>
+
+        <div class="grid">
+          <div class="card">
+            <div class="literal text-justify">
+              
+              <p class="text-justify">Aunque la estructura del proyecto es esencialmente <strong>cooperativa</strong> —con roles definidos y responsabilidades diferenciadas—, incorpora <strong>pulsos colaborativos</strong> que sincronizan a todos los elementos en momentos clave, permitiendo la reflexión compartida, la construcción conjunta de propuestas y la cohesión del grupo.</p>
+              <div class="dinamica-frame">
+
+                <div class="dinamica-steps">
+
+                  <div class="dinamica-box guardian">
+                    El <strong>Guardián del Planeta</strong> usará el simulador <strong>EN-ROADS</strong> para analizar el impacto del
+                    crecimiento poblacional y económico sobre la huella de carbono, compartiendo y comentando los resultados obtenidos.
+                    <div class="enroads-link-wrap">
+                      <a class="enroads-link"
+                        href="https://en-roads.climateinteractive.org/scenario.html"
+                        target="_blank"
+                        rel="noopener">
+                        Lanzar EN-ROADS ↗
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="dinamica-arrow a1" aria-hidden="true"></div>
+
+                  <div class="dinamica-box ingeniero">
+                    A partir de ese análisis, el <strong>Ingeniero de Soluciones</strong> diseñará una propuesta de empresa social orientada
+                    a reducir la huella de carbono. Dicha propuesta deberá justificarse y ser valorada de forma consensuada.
+                  </div>
+
+                  <div class="dinamica-arrow a2" aria-hidden="true"></div>
+
+                  <div class="dinamica-box voz">
+                    La <strong>Voz del Futuro</strong> preparará la presentación final y difundirá su propuesta mediante una red social con fines
+                    educativos; reflexionando sobre la viabilidad y el impacto social y ambiental de su iniciativa.
+                  </div>
+
+                </div>
+
+                <div class="dinamica-footer">
+                  El <strong>Arquitecto del Cambio</strong> se encargará de coordinar todo el proceso supervisando que todas y cada una
+                  de las fases se cumplan en tiempo y forma.
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- ENTORNO -->
+      <!-- ENTORNO -->
+      <article class="tab-panel dense" role="tabpanel" id="tab-entorno" aria-hidden="true" aria-labelledby="tabbtn-entorno">
+        <h2>Entorno de trabajo</h2>
+
+        <div class="grid">
+          <div class="card">
+            <div class="literal text-justify">
+
+              <p>
+                El desarrollo de la actividad combina el trabajo en el aula (entorno físico) con el uso de un entorno digital tanto
+                colaborativo como cooperativo, lo que facilita la coordinación, comunicación y creación conjunta de materiales. 
+                Se trabajará mediante cuentas institucionales gestionadas por el docente.
+              </p>
+
+              <div class="phases">
+                <!-- Fase 1 -->
+                <section class="phase phase-drive">
+                  <div class="phase-head">
+                    <span class="phase-tag">Fase 1</span>
+                    <h3>Google Drive</h3>
+                  </div>
+
+                  <p>
+                    El Arquitecto del Cambio de cada grupo creará una carpeta compartida en Google Drive, que servirá como espacio común para:
+                  </p>
+
+                  <ul>
+                    <li>Compartir ideas iniciales.</li>
+                    <li>Recopilar información relevante.</li>
+                    <li>Elaborar borradores y bocetos del proyecto.</li>
+                    <li>Registrar acuerdos y decisiones del grupo.</li>
+                  </ul>
+
+                  <p class="phase-note">
+                    Facilita el acceso, comentarios y edición conjunta, reforzando la coordinación y la responsabilidad compartida.
+                  </p>
+                </section>
+
+                <!-- Fase 2 -->
+                <section class="phase phase-canva">
+                  <div class="phase-head">
+                    <span class="phase-tag">Fase 2</span>
+                    <h3>Canva</h3>
+                  </div>
+
+                  <p>
+                    El producto final del proyecto se desarrollará mediante Canva, usando un documento compartido (creado y compartido por el
+                    Arquitecto del Cambio) para trabajar de forma simultánea.
+                  </p>
+
+                  <p class="phase-note">
+                    En este entorno se diseñará la propuesta visual de la empresa social y los materiales para su difusión educativa a través
+                    de la red social seleccionada.
+                  </p>
+                </section>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- CALENDARIO E HITOS -->
+      <!-- CALENDARIO E HITOS -->
+      <article class="tab-panel dense" role="tabpanel" id="tab-calendario" aria-hidden="true" aria-labelledby="tabbtn-calendario">
+        <h2>Calendario e hitos</h2>
+
+        <div class="grid">
+          <div class="card">
+            <div class="literal text-justify">
+
+              <h3>Hitos</h3>
+
+              <p>
+                Para organizar el desarrollo de la actividad y facilitar la coordinación, se utilizará un
+                <strong>calendario compartido</strong> accesible para alumnado y docente. Permite visualizar fases,
+                fijar plazos y reforzar la planificación del trabajo cooperativo.
+              </p>
+
+              <div class="timeline">
+
+                <div class="timeline-item">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h4>Sesión 1 · Inicio y manejo de EN-ROADS</h4>
+                    <p>Explicación de la actividad, asignación de roles y exploración inicial del simulador.</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h4>Sesión 2 · Análisis con EN-ROADS</h4>
+                    <p>Estudio del impacto del crecimiento poblacional y el desarrollo económico en la huella de carbono.</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h4>Sesión 3 · Diseño de propuesta</h4>
+                    <p>Elaboración de bocetos y definición de la empresa social en Google Drive.</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h4>Sesión 4 · Puesta en común</h4>
+                    <p>Revisión grupal y reflexión sobre el impacto social y ambiental.</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h4>Sesión 5 · Producto final</h4>
+                    <p>Diseño del material definitivo en Canva.</p>
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-marker"></div>
+                  <div class="timeline-content">
+                    <h4>Sesión 6 · Difusión</h4>
+                    <p>Publicación en la red social educativa y reflexión final.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="timeline-buffer">
+                <div class="buffer-label">
+                  🛡️ Margen de seguridad
+                </div>
+
+                <div class="buffer-content">
+                  <p>
+                    Existen <strong>2 sesiones adicionales</strong> como
+                    <strong>stock de seguridad</strong> para posibles imprevistos,
+                    ajustes o ampliaciones del proyecto.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendario (imagen + enlace) -->
+        <div class="calendar-block">
+          <div class="calendar-head">
+            <div class="calendar-title">
+              <!-- <span class="calendar-icon">📅</span> -->
+              <div>
+                <h3>📅 Calendario compartido</h3>
+                <p>Vista rápida del plan de sesiones y entregas.</p>
+              </div>
+            </div>
+
+            <!-- Enlace (opcional) -->
+            <a class="calendar-link" href="https://www.notion.so/Misi-n-Clim-tica-307f41052bf68074b25cead297e16cab?source=copy_link" target="_blank" rel="noopener">
+              Abrir calendario
+            </a>
+            <figure class="calendar-figure">
+              <img src="img/calendario.png"
+                  alt="Calendario de sesiones y entregas de la Misión Climática"
+                  loading="lazy">
+            </figure>
+          </div>
+
+          <!-- <figure class="calendar-figure">
+            <img src="img/calendario.png" alt="Calendario de hitos del proyecto" loading="lazy">
+            <figcaption>Si el calendario cambia, actualiza esta captura.</figcaption>
+          </figure> -->
+        </div>
+
+      </article>
+
+
+      <!-- REDES -->
+      <article class="tab-panel dense" role="tabpanel" id="tab-redes" aria-hidden="true" aria-labelledby="tabbtn-redes">
+        <h2>Redes sociales en el aula</h2>
+
+        <div class="grid">
+          <div class="card">
+
+            <h3>Red elegida</h3>
+            <p>
+              La red seleccionada será <strong>Instagram</strong>, por su carácter visual y su familiaridad con el alumnado.
+              Permite difundir mensajes de concienciación mediante publicaciones gráficas, carruseles informativos y vídeos breves (reels),
+              facilitando la comunicación del impacto social y ambiental de la empresa creada.
+            </p>
+
+            <h3>Tipo de perfil</h3>
+            <p>
+              Será un <strong>perfil educativo de aula</strong>, propiedad del centro y gestionado por el docente.
+              Se utilizará exclusivamente con fines educativos, garantizando un uso responsable y seguro.
+            </p>
+
+          </div>
+        </div>
+
+        <!-- Tarjeta tipo Instagram -->
+        <div class="grid">
+          <div class="card insta-card">
+            <div class="insta-header">
+              <div class="insta-avatar">🌍</div>
+              <div>
+                <strong>@MisionClimatica3ESO</strong>
+                <div class="insta-sub">Proyecto educativo · 3º ESO</div>
+              </div>
+            </div>
+
+            <div class="insta-bio">
+              Analizamos el impacto del crecimiento y diseñamos soluciones sostenibles.<br>
+              Empresa social + acción climática 🌱<br>
+              <em>Aprender para transformar.</em>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfiles educativos -->
+        <div class="grid">
+          <div class="card">
+            <h3>Perfiles educativos de referencia</h3>
+            <div class="perfiles-grid">
+              <span>@rosaliarte</span>
+              <span>@ninocerveram</span>
+              <span>@entre_tea</span>
+              <span>@econosublime</span>
+              <span>@albertoptfp</span>
+              <span>@carmen_llopispablos</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Usos -->
+        <div class="grid">
+          <div class="card">
+            <!--<h3>5 usos educativos del perfil</h3>
+            <div class="usos-grid">
+              <div>📢 Difundir propuestas de empresa social.</div>
+              <div>📊 Publicar visualizaciones del simulador EN-ROADS.</div>
+              <div>🌱 Campañas de concienciación climática.</div>
+              <div>📚 Compartir recursos sobre sostenibilidad.</div>
+              <div>💬 Generar espacios de reflexión colaborativa.</div>
+            </div>-->
+            <!-- Carrusel: usos educativos -->
+              <section class="uses-carousel" aria-label="Usos educativos del perfil">
+                <div class="uses-head">
+                  <h3 class="uses-title">5 Usos educativos del perfil</h3>
+
+                  <div class="uses-controls">
+                    <button class="uses-btn" type="button" data-uses-prev aria-label="Anterior">‹</button>
+                    <button class="uses-btn" type="button" data-uses-next aria-label="Siguiente">›</button>
+                  </div>
+                </div>
+
+                <div class="uses-track" data-uses-track tabindex="0" aria-label="Carrusel de tarjetas">
+                  <article class="use-card">
+                    <div class="use-num">📢</div>
+                    <p>Difundir las propuestas de empresa social diseñadas por el alumnado, mostrando el proceso y el impacto esperado.</p>
+                  </article>
+
+                  <article class="use-card">
+                    <div class="use-num">📊</div>
+                    <p>Publicar visualizaciones y conclusiones extraídas del simulador EN-ROADS para fomentar el análisis crítico.</p>
+                  </article>
+
+                  <article class="use-card">
+                    <div class="use-num">🌱</div>
+                    <p>Desarrollar campañas de concienciación sobre la reducción de la huella de carbono dirigidas a la comunidad educativa.</p>
+                  </article>
+
+                  <article class="use-card">
+                    <div class="use-num">📚</div>
+                    <p>Compartir recursos y datos actualizados sobre sostenibilidad y economía social que complementen el trabajo en el aula.</p>
+                  </article>
+
+                  <article class="use-card">
+                    <div class="use-num">💬</div>
+                    <p>Generar espacios de reflexión mediante publicaciones colaborativas en las que el alumnado explique qué ha aprendido y cómo puede aplicarlo en su entorno.</p>
+                  </article>
+                </div>
+
+                <p class="uses-hint">Desliza horizontalmente o usa ‹ ›. (También funciona con rueda del ratón)</p>
+              </section>
+
+          </div>
+        </div>
+
+      </article>
+
+
+      <!-- FUNDAMENTACIÓN -->
+      <!-- FUNDAMENTACIÓN -->
+<article class="tab-panel dense" role="tabpanel" id="tab-fundamentacion" aria-hidden="true" aria-labelledby="tabbtn-fundamentacion">
+  <h2>Fundamentación económica y valor educativo de la propuesta</h2>
+
+  <div class="grid">
+    <div class="card">
+      <div class="literal text-justify">
+
+        <p class="text-justify">
+          La actividad no pretende cuestionar el crecimiento demográfico o económico en sí mismo, sino analizar cómo la forma
+          en que dicho crecimiento se articula influye en la huella de carbono y en el equilibrio ambiental. A través del uso del
+          simulador EN-ROADS, el alumnado observa que las decisiones económicas tienen consecuencias medibles sobre las
+          emisiones y el calentamiento global.
+        </p>
+
+        <p class="text-justify">
+          Mediante el diseño de una empresa social, el alumnado reflexiona sobre cómo es posible compatibilizar desarrollo
+          económico y sostenibilidad mediante modelos productivos responsables, eficiencia energética y economía circular,
+          trasladando el análisis a la acción emprendedora con soluciones orientadas a transformar el modelo productivo y de
+          consumo sin renunciar al progreso.
+        </p>
+
+        <p class="text-justify">
+          De este modo, el proyecto conecta el análisis de datos del simulador EN-ROADS con la toma de decisiones
+          emprendedoras orientadas al bien común y la sostenibilidad, comprendiendo que el emprendimiento no se limita a la
+          obtención de beneficio económico.
+        </p>
+
+        <p class="text-justify">
+          Desde el punto de vista competencial, la actividad favorece el pensamiento crítico, la toma de decisiones fundamentadas,
+          el trabajo cooperativo y la responsabilidad social, integrando análisis de datos, creatividad empresarial y comunicación
+          digital en un proyecto coherente y aplicado a un problema real.
+        </p>
+        <hr class="soft-sep">
+
+          <hr class="soft-sep">
+
+            <div class="fund-blocks">
+
+              <div class="fund-item">
+                <div class="fund-icon">📊</div>
+                <h4>Impacto medible</h4>
+                <p>Las decisiones económicas influyen directamente en las emisiones y el calentamiento global.</p>
+              </div>
+
+              <div class="fund-item">
+                <div class="fund-icon">🌱</div>
+                <h4>Emprendimiento con propósito</h4>
+                <p>La empresa social se orienta al bien común y a la sostenibilidad.</p>
+              </div>
+
+              <div class="fund-item">
+                <div class="fund-icon">♻️</div>
+                <h4>Economía circular</h4>
+                <p>Eficiencia energética y modelos productivos responsables como eje de transformación.</p>
+              </div>
+
+              <div class="fund-item">
+                <div class="fund-icon">🎓</div>
+                <h4>Valor competencial</h4>
+                <p>Integra pensamiento crítico, cooperación y comunicación digital aplicada.</p>
+              </div>
+
+            </div>
+
+
+      </div>
+    </div>
+  </div>
+</article>
+
+
+    </section>
+
+    <footer>
+      MISIÓN CLIMÁTICA · 3.º ESO · Emprendimiento Personal y Social (Economía)
+    </footer>
+  </main>
+
+  <script>
+  // --- Navegación por pestañas accesible + transición ---
+  const btns = Array.from(document.querySelectorAll('.tab-btn'));
+  const panels = Array.from(document.querySelectorAll('.tab-panel'));
+
+  function activateTab(id){
+    const current = panels.find(p => p.getAttribute('aria-hidden') === 'false');
+    const next = document.getElementById('tab-' + id);
+
+    if (!next || current === next) return;
+
+    // fade-out panel actual
+    if (current) current.classList.add('fade-out');
+
+    setTimeout(() => {
+
+      // cambiar estado aria en botones
+      btns.forEach(b=>{
+        const on = b.id === 'tabbtn-' + id;
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+
+      // cambiar panel visible
+      panels.forEach(p=>{
+        const on = p.id === 'tab-' + id;
+        p.setAttribute('aria-hidden', on ? 'false' : 'true');
+        p.classList.remove('fade-out');
+      });
+
+      // scroll suave arriba
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    }, 180);
+  }
+
+  btns.forEach(b => b.addEventListener('click', () => {
+    const id = b.id.replace('tabbtn-', '');
+    activateTab(id);
+  }));
+</script>
+
+  
+<script>
+  const buttons = document.querySelectorAll('.role-toggle');
+  const allPanels = () => Array.from(document.querySelectorAll('.role-content'));
+
+  function closeAll() {
+    allPanels().forEach(p => p.classList.remove('open'));
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Guardamos scroll y posición del botón en viewport
+      const scrollBefore = window.scrollY;
+      const topBefore = btn.getBoundingClientRect().top;
+
+      const target = document.getElementById(btn.dataset.role);
+      const wasOpen = target.classList.contains('open');
+
+      closeAll();
+      if (!wasOpen) target.classList.add('open');
+
+      // Compensación inmediata
+      requestAnimationFrame(() => {
+        const topAfter = btn.getBoundingClientRect().top;
+        const delta = topAfter - topBefore;
+        window.scrollTo(0, scrollBefore + delta);
+      });
+
+      // Compensación extra tras la transición (por si tu CSS anima max-height)
+      setTimeout(() => {
+        const topAfter2 = btn.getBoundingClientRect().top;
+        const delta2 = topAfter2 - topBefore;
+        window.scrollTo(0, scrollBefore + delta2);
+      }, 380); // ~ igual que tu transición 0.35s
+    });
+  });
+
+  // ===== Carrusel usos educativos =====
+(() => {
+  const track = document.querySelector('[data-uses-track]');
+  if (!track) return;
+
+  const prev = document.querySelector('[data-uses-prev]');
+  const next = document.querySelector('[data-uses-next]');
+
+  const step = () => Math.min(track.clientWidth * 0.9, 520);
+
+  prev?.addEventListener('click', () => {
+    track.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+
+  next?.addEventListener('click', () => {
+    track.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+
+  // rueda del ratón => scroll horizontal suave
+  track.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      track.scrollBy({ left: e.deltaY, behavior: 'smooth' });
+    }
+  }, { passive: false });
+})();
+
+</script>
+
+<script>
+  const curricToggles = document.querySelectorAll('.curric-toggle');
+  const masterBtn = document.getElementById('curric-master-toggle');
+
+  function updateMasterLabel(){
+    const allOpen = [...document.querySelectorAll('.curric-content')]
+      .every(p => !p.hasAttribute('hidden'));
+
+    masterBtn.textContent = allOpen ? 'Cerrar todo' : 'Abrir todo';
+  }
+
+  // Toggle individual
+  curricToggles.forEach(btn=>{
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.target;
+      const panel = document.getElementById(id);
+      const isOpen = !panel.hasAttribute('hidden');
+
+      if (isOpen) {
+        panel.setAttribute('hidden','');
+        btn.setAttribute('aria-expanded','false');
+        btn.textContent = '+ ver';
+      } else {
+        panel.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded','true');
+        btn.textContent = '– ocultar';
+      }
+
+      updateMasterLabel();
+    });
+  });
+
+  // Botón maestro
+  masterBtn.addEventListener('click', ()=>{
+    const allPanels = document.querySelectorAll('.curric-content');
+    const allOpen = [...allPanels].every(p => !p.hasAttribute('hidden'));
+
+    allPanels.forEach(panel=>{
+      const btn = document.querySelector(`[data-target="${panel.id}"]`);
+
+      if(allOpen){
+        panel.setAttribute('hidden','');
+        btn.textContent = '+ ver';
+        btn.setAttribute('aria-expanded','false');
+      } else {
+        panel.removeAttribute('hidden');
+        btn.textContent = '– ocultar';
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+
+    updateMasterLabel();
+  });
+</script>
+
+
+
+
+
+</body>
+</html>
+
